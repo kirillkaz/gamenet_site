@@ -1,1 +1,12 @@
-.venv
+# created by virtualenv automatically
+gameNetProj/.dockerignore
+gameNetProj/.gitattributes
+.gitignore
+gameNetProj/gunicorn_config.py
+gameNetProj/bin
+gameNetProj/poetry.lock
+gameNetProj/pyproject.toml
+gameNetProj/venv
+gameNetProj/static/admin
+gameNetProj/static/rest_framework
+.venv/
