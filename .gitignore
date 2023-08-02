@@ -2,6 +2,7 @@
 gameNetProj/bin
 gameNetProj/poetry.lock
 gameNetProj/pyproject.toml
-gameNetProj/venv
+gameNetProj/venv/
 .venv/
-
+gameNetProj/config/__pycache__
+gameNetProj/profiles/__pycache__
