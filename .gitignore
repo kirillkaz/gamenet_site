@@ -3,7 +3,5 @@ gameNetProj/bin
 gameNetProj/poetry.lock
 gameNetProj/pyproject.toml
 gameNetProj/venv
-gameNetProj/static/admin
-gameNetProj/static/rest_framework
 .venv/
 
