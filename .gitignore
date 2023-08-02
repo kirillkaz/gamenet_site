@@ -1,6 +1,4 @@
 # created by virtualenv automatically
-gameNetProj/.dockerignore
-gameNetProj/.gitattributes
 gameNetProj/gunicorn_config.py
 gameNetProj/bin
 gameNetProj/poetry.lock
