@@ -9,3 +9,7 @@ gameNetProj/profiles/__pycache__
 gameNetProj/__pycache__
 venv/
 ssh_key.pub
+gemeNetProj/profiles/migrations/__pycache__
+gemeNetProj/activityApp/migrations/__pycache__
+gemeNetProj/groups/migrations/__pycache__
+gemeNetProj/platforms/migrations/__pycache__

@@ -1,25 +1,65 @@
 from django.db import models
-from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
-from datetime import date
-# Create your models here.
+from datetime import datetime
 
-class User(AbstractBaseUser):
-    login = models.CharField(max_length=100, unique=True)
+
+'''
+this modell created for users galaryes
+'''
+class UserImages(models.Model):
+    id = models.IntegerField(primary_key=True)
+    user_id = models.ForeignKey('profiles.User', on_delete=models.CASCADE)
+    image = models.CharField()
+
+
+class UserManager(BaseUserManager):
+
+    def create_user(self, login, password=None):
+        if not login:
+            raise ValueError('Users must have a login')
+
+        user = self.model(
+            login=login,
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+
+        return user
+
+    def create_superuser(self, login, password=None):
+
+        user = self.create_user(
+            login=login,
+            password=password,
+        )
+        user.save(using=self._db)
+
+        return user
+
+
+'''
+user of the gamenet
+'''
+class User(PermissionsMixin, AbstractBaseUser):
+    USERNAME_FIELD = "login"
+    login = models.CharField(max_length=100, primary_key=True)
     password = models.CharField(max_length=100)
 
-    email = models.CharField(max_length=100)
-    phone = models.CharField(max_length=14)
-    last_login = None
+    email = models.CharField(max_length=100, default=None)
+    phone = models.CharField(max_length=14, default=None)
+    last_login = models.DateTimeField(default=datetime.now)
 
-    name = models.CharField(max_length=100)
-    surname = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, default=None)
+    surname = models.CharField(max_length=100, default=None)
     
-    gamelist_id = models.IntegerField()
-    avatar_id = models.IntegerField()
+    avatar_id = models.IntegerField(default=None)
+    galary = models.ManyToManyField(UserImages, related_name='images2users', default=None)
 
-    is_superuser = False
-    is_staff = False
+    is_superuser = None
+    is_staff = None
+
+    objects = UserManager()
 
     @property
     def is_staff(self):
@@ -32,3 +72,21 @@ class User(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_superuser == True
+
+
+'''
+gamenet user's bio
+'''
+class Bio(models.Model):
+    user_id = models.ForeignKey("User", on_delete=models.CASCADE, primary_key=True)
+    user_description = models.CharField(max_length=250, default=None)
+    sex = models.CharField(max_length=1, default=None)
+    birthday = models.DateField(default=None)
+
+
+'''
+friends of the gamenet's user
+'''
+class User_Friends(models.Model):
+    user_id = models.ForeignKey("User", on_delete=models.CASCADE, primary_key=True)
+    friends = models.ManyToManyField(User, related_name='friends2users', default=None)
