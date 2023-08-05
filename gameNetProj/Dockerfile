@@ -25,6 +25,5 @@ RUN chmod +x /usr/src/app/entrypoint.sh
 COPY . .
 
 RUN . ./entrypoint.sh
-CMD ["gunicorn", "--bind", "0.0.0.0:80", "app.main:app"]
-# CMD ls -a
+
 ENTRYPOINT . ./entrypoint.sh
