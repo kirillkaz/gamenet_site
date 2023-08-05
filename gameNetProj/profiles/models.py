@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.base_user import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin
 from datetime import date
 # Create your models here.
 
@@ -24,10 +25,10 @@ class User(AbstractBaseUser):
     def is_staff(self):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
-        return self.position == 'Разработчик БД'
+        return self.is_staff == True
 
     @property
     def is_superuser(self):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
-        return self.position == 'Разработчик БД'
+        return self.is_superuser == True

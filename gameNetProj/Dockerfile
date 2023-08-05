@@ -17,12 +17,14 @@ RUN pip install -r requirements.txt
 
 
 # copy entrypoint.sh
-COPY ./entrypoint.sh .
+COPY ../entrypoint.sh .
 RUN sed -i 's/\r$//g' /usr/src/app/entrypoint.sh
 RUN chmod +x /usr/src/app/entrypoint.sh
 
 # copy project
 COPY . .
 
-#RUN . ./entrypoint.sh
+RUN . ./entrypoint.sh
+CMD ["gunicorn", "--bind", "0.0.0.0:80", "app.main:app"]
+# CMD ls -a
 ENTRYPOINT . ./entrypoint.sh

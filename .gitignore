@@ -6,3 +6,5 @@ gameNetProj/venv/
 .venv/
 gameNetProj/config/__pycache__
 gameNetProj/profiles/__pycache__
+gameNetProj/__pycache__
+venv/
