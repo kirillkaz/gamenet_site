@@ -78,7 +78,7 @@ class User(PermissionsMixin, AbstractBaseUser):
 gamenet user's bio
 '''
 class Bio(models.Model):
-    user_id = models.ForeignKey("User", on_delete=models.CASCADE, primary_key=True)
+    user_id = models.OneToOneField("User", on_delete=models.CASCADE, primary_key=True)
     user_description = models.CharField(max_length=250, default=None)
     sex = models.CharField(max_length=1, default=None)
     birthday = models.DateField(default=None)
@@ -88,5 +88,5 @@ class Bio(models.Model):
 friends of the gamenet's user
 '''
 class User_Friends(models.Model):
-    user_id = models.ForeignKey("User", on_delete=models.CASCADE, primary_key=True)
+    user_id = models.OneToOneField("User", on_delete=models.CASCADE, primary_key=True)
     friends = models.ManyToManyField(User, related_name='friends2users', default=None)
