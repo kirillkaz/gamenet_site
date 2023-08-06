@@ -8,11 +8,11 @@ class Group(models.Model):
     id = models.IntegerField(primary_key=True)
 
     owner_id = models.ForeignKey('profiles.User', on_delete=models.CASCADE)
-    subscribers = models.ManyToManyField(User, related_name='groups2users', default=None)
+    subscribers = models.ManyToManyField(User, related_name='groups2users', blank=True)
 
-    name = models.CharField(100, default=None)
-    avatar = models.CharField(default=None)
-    description = models.CharField(100, default=None)
+    name = models.CharField(100, blank=True)
+    avatar = models.CharField(blank=True)
+    description = models.CharField(100, blank=True)
 
     is_private = models.BooleanField(default=False)
     

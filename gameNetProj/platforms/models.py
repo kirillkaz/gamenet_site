@@ -7,8 +7,8 @@ gamenet user's platforms
 class Platform(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100, choices=PLATFORM_NAMES, default='Steam')
-    image = models.CharField(default=None)
-    users = models.ManyToManyField(User, related_name='platform2users', default=None)
+    image = models.CharField(blank=True)
+    users = models.ManyToManyField(User, related_name='platform2users', blank=True)
 
 # '''
 # model for ManyToMany
@@ -26,7 +26,7 @@ class Platform_Link(models.Model):
     id = models.IntegerField(primary_key=True)
     user_id = models.ForeignKey('profiles.User', on_delete=models.CASCADE)
     platform_id = models.ForeignKey('platform', on_delete=models.CASCADE)
-    link = models.CharField(default=None)
+    link = models.CharField(blank=True)
 
 # '''
 # model for ManyToMany

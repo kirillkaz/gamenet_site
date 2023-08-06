@@ -46,15 +46,15 @@ class User(PermissionsMixin, AbstractBaseUser):
     login = models.CharField(max_length=100, primary_key=True)
     password = models.CharField(max_length=100)
 
-    email = models.CharField(max_length=100, default=None)
-    phone = models.CharField(max_length=14, default=None)
+    email = models.CharField(max_length=100, unique=True)
+    phone = models.CharField(max_length=14, blank=True, unique=True)
     last_login = models.DateTimeField(default=datetime.now)
 
-    name = models.CharField(max_length=100, default=None)
-    surname = models.CharField(max_length=100, default=None)
+    name = models.CharField(max_length=100, blank=True)
+    surname = models.CharField(max_length=100, blank=True)
     
-    avatar_id = models.IntegerField(default=None)
-    galary = models.ManyToManyField(UserImages, related_name='images2users', default=None)
+    avatar_id = models.IntegerField(default=1)
+    galary = models.ManyToManyField(UserImages, related_name='images2users', blank=True)
 
     is_superuser = None
     is_staff = None
@@ -79,9 +79,9 @@ gamenet user's bio
 '''
 class Bio(models.Model):
     user_id = models.OneToOneField("User", on_delete=models.CASCADE, primary_key=True)
-    user_description = models.CharField(max_length=250, default=None)
-    sex = models.CharField(max_length=1, default=None)
-    birthday = models.DateField(default=None)
+    user_description = models.CharField(max_length=250, blank=True)
+    sex = models.CharField(max_length=1, blank=True)
+    birthday = models.DateField(blank=True)
 
 
 '''
@@ -89,4 +89,4 @@ friends of the gamenet's user
 '''
 class User_Friends(models.Model):
     user_id = models.OneToOneField("User", on_delete=models.CASCADE, primary_key=True)
-    friends = models.ManyToManyField(User, related_name='friends2users', default=None)
+    friends = models.ManyToManyField(User, related_name='friends2users', blank=True)

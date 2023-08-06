@@ -42,7 +42,7 @@ chats with two members
 class Chat(models.Model):
     id = models.IntegerField(primary_key=True)
     creator_id = models.ForeignKey('profiles.User', on_delete=models.PROTECT)
-    avatar = models.CharField(default=None)
+    avatar = models.CharField(blank=True)
     administrators = models.ManyToManyField(User, related_name='chat_admins2users')
     members = models.ManyToManyField(User, related_name='chat_membs2users')
 '''
