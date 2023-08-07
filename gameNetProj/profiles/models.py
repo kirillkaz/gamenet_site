@@ -56,8 +56,8 @@ class User(PermissionsMixin, AbstractBaseUser):
     avatar_id = models.IntegerField(default=1)
     galary = models.ManyToManyField(UserImages, related_name='images2users', blank=True)
 
-    is_superuser = None
-    is_staff = None
+    # is_superuser = models.BooleanField(default=False)
+    # is_staff = models.BooleanField(default=False)
 
     objects = UserManager()
 
@@ -65,13 +65,13 @@ class User(PermissionsMixin, AbstractBaseUser):
     def is_staff(self):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
-        return self.is_staff == True
+        return True
 
     @property
     def is_superuser(self):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
-        return self.is_superuser == True
+        return True
 
 
 '''
