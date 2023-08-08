@@ -16,8 +16,8 @@
     <div class="contentHeader">Регистрация</div>
     <form method="post">
     {% csrf_token %}
-    <div class="loginForm">
-        {% for field in form %}
+    <div class="registerForm">
+        {% for field in register_form %}
         <p>
             {% if field.errors %}
             <ul class="errorlist">
@@ -31,6 +31,14 @@
         {% endfor %}
         <input class="submit_button" name='signtype' type="submit" value='Создать аккаунт'>
    </div>
+    </form>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="authForm">
+            {{ auth_form.as_p }}
+            <input class="submit_button" name='signtype' type="submit" value='Войти'> 
+       </div>
     </form>
 </div>
 <div class="footer"> </div>

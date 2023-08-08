@@ -72,6 +72,9 @@ class User(PermissionsMixin, AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return True
+    
+    def __str__():
+        return self.login
 
 
 '''

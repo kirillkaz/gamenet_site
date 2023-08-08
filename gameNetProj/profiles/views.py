@@ -1,37 +1,73 @@
 from django.conf import settings
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from .forms import CustomRegisterForm, CustomAuthForm
 from django.shortcuts import render, redirect, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
+from .models import User
+
 
 @csrf_exempt
-def register(request):
+def register_auth(request):
     if request.method == 'POST':
-        form = CustomRegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            user.refresh_from_db()
-            user.save()
-            login(request, user)
+        register_form = CustomRegisterForm()
+        auth_form = CustomAuthForm(request.POST)
 
-            return HttpResponse(f'<h1>{user.login} Успех!</h1>')
+        if 'email' in request.POST:
+            register_form = CustomRegisterForm(request.POST)
+            if register_form.is_valid():
+                user = register_form.save()
+                user.refresh_from_db()
+                user.save()
+                login(request, user)
+                return HttpResponse(f'<h1>{user.login} Успех!</h1>')
+        
+        elif auth_form.is_valid():
+            user = authenticate(login=auth_form.cleaned_data['login'], password=auth_form.cleaned_data['password'])
+            if user is not None:
+                login(request, user)
+
         else:
-            form = CustomRegisterForm()
-
+            register_form = CustomRegisterForm()
+            auth_form = CustomAuthForm()
+        
     else:
-        form = CustomRegisterForm()  
-    return render(request, 'auth_register/register_auth.html', {'form': form})
+        register_form = CustomRegisterForm()
+        auth_form = CustomAuthForm()
+
+    context = {
+        'register_form': register_form,
+        'auth_form': auth_form,
+    }
+    return render(request, 'auth_register/register_auth.html', context=context)
+
+# @csrf_exempt
+# def register(request):
+#     if request.method == 'POST':
+#         form = CustomRegisterForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             user.refresh_from_db()
+#             user.save()
+#             login(request, user)
+
+#             return HttpResponse(f'<h1>{user.login} Успех!</h1>')
+#         else:
+#             form = CustomRegisterForm()
+
+#     else:
+#         form = CustomRegisterForm()  
+#     return render(request, 'auth_register/register_auth.html', {'form': form})
 
 
-class UserLoginView(LoginView):
-    template_name = 'auth_register/register_auth.html'
-    form = CustomAuthForm
+# class UserLoginView(LoginView):
+#     template_name = 'auth_register/register_auth.html'
+#     form = CustomAuthForm
     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return dict(list(context.items()))
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         return dict(list(context.items()))
     
-    def get_success_url(self):
-        return reverse_lazy('register')
+#     def get_success_url(self):
+#         return reverse_lazy('register')
