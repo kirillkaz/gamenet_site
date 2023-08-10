@@ -1,46 +1,43 @@
-{% comment %} {%load static%} {% endcomment %}
+{%load static%}
 
 <!doctype html>
 <html lang="en">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Авторизация</title>
-    {% comment %} <link rel="stylesheet" type="text/css" href="{%static 'css/style.css'%}"> {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{%static 'css/style.css'%}">
 </head>
 <body>
 <div class="header"></div>
-<div class="content">
-    <div class="contentHeader">Регистрация</div>
+
+<div id="app" class="content">
+    <div class="poly"></div>
+
     <form method="post">
     {% csrf_token %}
     <div class="registerForm">
-        {% for field in register_form %}
-        <p>
-            {% if field.errors %}
-            <ul class="errorlist">
-                {% for error in field.errors %}
-                <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-             {{ field.label_tag }} {{ field }}
-        </p>
-        {% endfor %}
+        <div class="registerFormHeader"></div>
+       {% for field in register_form %}
+        <p>{{field}}</p>
+       {% endfor %}
         <input class="submit_button" name='signtype' type="submit" value='Создать аккаунт'>
    </div>
     </form>
 
-    <form method="post">
+    {% comment %} <form method="post">
         {% csrf_token %}
         <div class="authForm">
             {{ auth_form.as_p }}
             <input class="submit_button" name='signtype' type="submit" value='Войти'> 
        </div>
-    </form>
+    </form> {% endcomment %}
 </div>
+
 <div class="footer"> </div>
+
+<script src="{% static 'scripts/login_register_page_script.js' %}"></script>
 </body>
 </html>

@@ -13,11 +13,15 @@ from django.contrib.auth import authenticate
 
 
 class CustomAuthForm(forms.Form):
-    login = forms.CharField(widget=forms.TextInput(attrs={'class':'user_login','placeholder':'Логин'}))
+    login = forms.CharField(widget=forms.TextInput(attrs={'class':'user_login','placeholder':'Логин', 'v-on:click': 'testFoo'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'user_password','placeholder':'Пароль'}))
 
 
 class CustomRegisterForm(UserCreationForm):
+    login = forms.CharField(widget=forms.TextInput(attrs={'class':'register_input','placeholder':'Логин'}))
+    email = forms.CharField(widget=forms.TextInput(attrs={'class':'register_input','placeholder':'Электронная почта'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'register_input','placeholder':'Пароль'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class':'register_input','placeholder':'Подтверждение пароля'}))
     class Meta:
         model = User
         fields = ['login', 'email', 'password1', 'password2']
