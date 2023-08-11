@@ -12,10 +12,13 @@
 </head>
 <body>
 <div class="header"></div>
-
+<div class="poly"></div>
 <div id="app" class="content">
-    <div class="poly"></div>
 
+    <div class="form_container">
+	<div class="text_auth">ВХОД</div>
+	<div class="text_register active">РЕГИСТРАЦИЯ</div>
+    </div>
     <form method="post">
     {% csrf_token %}
     <div class="registerForm">
@@ -23,7 +26,7 @@
        {% for field in register_form %}
         <p>{{field}}</p>
        {% endfor %}
-        <input class="submit_button" name='signtype' type="submit" value='Создать аккаунт'>
+        <input class="submit_button" name='signtype' type="submit" value='Создать Аккаунт!'>
    </div>
     </form>
 
