@@ -4,15 +4,6 @@ from django.contrib.auth.models import PermissionsMixin
 from datetime import datetime
 
 
-'''
-this modell created for users galaryes
-'''
-class UserImages(models.Model):
-    id = models.IntegerField(primary_key=True)
-    user_id = models.ForeignKey('profiles.User', on_delete=models.CASCADE)
-    image = models.CharField()
-
-
 class UserManager(BaseUserManager):
 
     def create_user(self, login, password=None):
@@ -39,6 +30,15 @@ class UserManager(BaseUserManager):
 
 
 '''
+this modell created for users galaryes
+'''
+class UserImages(models.Model):
+    id = models.IntegerField(primary_key=True)
+    user_id = models.ForeignKey('profiles.User', on_delete=models.CASCADE)
+    image = models.CharField()
+
+
+'''
 user of the gamenet
 '''
 class User(PermissionsMixin, AbstractBaseUser):
@@ -47,7 +47,9 @@ class User(PermissionsMixin, AbstractBaseUser):
     password = models.CharField(max_length=100)
 
     email = models.CharField(max_length=100, unique=True)
-    phone = models.CharField(max_length=14, blank=True, unique=True)
+    phone = models.CharField(max_length=14, blank=True)
+    ''', unique=True'''
+    #TODO сделать телефон каким то образом уникальным полем
     last_login = models.DateTimeField(default=datetime.now)
 
     name = models.CharField(max_length=100, blank=True)
@@ -73,8 +75,16 @@ class User(PermissionsMixin, AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return True
     
-    def __str__():
-        return self.login
+    # def __str__():
+    #     return self.login
+    
+
+'''
+friends of the gamenet's user
+'''
+class User_Friends(models.Model):
+    user_id = models.OneToOneField("User", on_delete=models.CASCADE, primary_key=True)
+    friends = models.ManyToManyField(User, related_name='friends2users', blank=True)
 
 
 '''
@@ -85,11 +95,3 @@ class Bio(models.Model):
     user_description = models.CharField(max_length=250, blank=True)
     sex = models.CharField(max_length=1, blank=True)
     birthday = models.DateField(blank=True)
-
-
-'''
-friends of the gamenet's user
-'''
-class User_Friends(models.Model):
-    user_id = models.OneToOneField("User", on_delete=models.CASCADE, primary_key=True)
-    friends = models.ManyToManyField(User, related_name='friends2users', blank=True)

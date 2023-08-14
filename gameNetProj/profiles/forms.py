@@ -13,7 +13,7 @@ from django.contrib.auth import authenticate
 
 
 class CustomAuthForm(forms.Form):
-    login = forms.CharField(widget=forms.TextInput(attrs={'class':'user_login','placeholder':'Логин', 'v-on:click': 'testFoo'}))
+    login = forms.CharField(widget=forms.TextInput(attrs={'class':'user_login','placeholder':'Логин'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'user_password','placeholder':'Пароль'}))
 
 

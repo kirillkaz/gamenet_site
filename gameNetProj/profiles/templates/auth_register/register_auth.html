@@ -11,38 +11,45 @@
     <link rel="stylesheet" type="text/css" href="{%static 'css/style.css'%}">
 </head>
 <body>
-<div class="header"></div>
-<div class="poly"></div>
-<div id="app" class="content">
+    <div class='logo'>
+        <div class="logo_img">
+            <img src="../../../media/blue_logo.png">
+        </div>
+        <div class="logo_text">
+            GAME<span>NET</span>
+        </div>
+    </div>
+    <div class="poly"></div>
 
-    <div class="form_container">
-	<div class="text_auth">ВХОД</div>
-	<div class="text_register active">РЕГИСТРАЦИЯ</div>
+    <div id="app" class="content">
+        <div class="form_container">
+        <div class="text_auth" v-on:click="showAuthForm">ВХОД</div>
+        <div class="text_register active" v-on:click="showRegisterForm">РЕГИСТРАЦИЯ</div>
+        </div>
+
+        <form method="post">
+        {% csrf_token %}
+        <div class="registerForm">
+            <div class="registerFormHeader"></div>
+        {% for field in register_form %}
+        <p>{{field}}</p>
+        {% endfor %}
+            <input class="submit_button" name='signtype' type="submit" value='Создать Аккаунт!'>
+    </div>
+        </form>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="authForm">
+            <p>{{ auth_form.login }}</p>
+            <p>{{ auth_form.password }}</p>
+                <input class="submit_button" name='signtype' type="submit" value='Войти'> 
+        </div>
+        </form>
     </div>
 
-    <form method="post">
-    {% csrf_token %}
-    <div class="registerForm">
-        <div class="registerFormHeader"></div>
-       {% for field in register_form %}
-       <p>{{field}}</p>
-       {% endfor %}
-        <input class="submit_button" name='signtype' type="submit" value='Создать Аккаунт!'>
-   </div>
-    </form>
-	{%comment%}
-    <form method="post">
-        {% csrf_token %}
-        <div class="authForm">
-	    <p>{{ auth_form.login }}</p>
-	    <p>{{ auth_form.password }}</p>
-            <input class="submit_button" name='signtype' type="submit" value='Войти'> 
-       </div>
-    </form>{%endcomment%}
-</div>
+    <div class="footer"> </div>
 
-<div class="footer"> </div>
-
-<script src="{% static 'scripts/login_register_page_script.js' %}"></script>
+    <script src="{% static 'scripts/login_register_page_script.js' %}"></script>
 </body>
 </html>
