@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-
+from minio import Minio
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -92,6 +92,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 #     }
 # }
 
+#postgres db
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('SQL_ENGINE', 'django.db.backends.postgresql'),
@@ -103,9 +104,36 @@ DATABASES = {
     }
 }
 
+#redis db
 REDIS_HOST = os.environ.get('REDIS_HOST', '0.0.0.0')
 REDIS_PORT = 6379
 
+#minio db
+AWS_ACCESS_KEY_ID = os.environ.get('MINIO_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY = os.environ.get('MINIO_SECRET_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('BUCKET_NAME')
+AWS_S3_ENDPOINT_URL = os.environ.get('MINIO_URL')
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+AWS_PUBLIC_MEDIA_LOCATION = 'media'
+DEFAULT_FILE_STORAGE = 'ezevent_api.storage_backends.PublicMediaStorage'
+
+client = Minio(
+    os.environ.get('MINIO_DOMAIN'),
+    access_key=AWS_ACCESS_KEY_ID,
+    secret_key=AWS_SECRET_ACCESS_KEY,
+    secure=os.environ.get('MINIO_SECURE') == 'True'
+)
+
+# found = client.bucket_exists(AWS_STORAGE_BUCKET_NAME)
+# if not found: client.make_bucket(AWS_STORAGE_BUCKET_NAME)
+
+#пока что не нужно
+# AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
+# PRIVATE_FILE_STORAGE = 'ezevent_api.storage_backends.PrivateMediaStorage'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
