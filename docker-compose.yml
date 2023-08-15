@@ -6,6 +6,7 @@ services:
     volumes:
       - ./gameNetProj/:/usr/src/app/
       - static_volume:/usr/src/app/static
+      - media_volume:/usr/src/app/media
     environment:
       - REDIS_HOST=redis
     expose:
@@ -33,6 +34,7 @@ services:
       - 80:80
     volumes:
       - static_volume:/usr/src/app/static
+      - media_volume:/usr/src/app/media
     depends_on:
       - web
 
@@ -47,4 +49,5 @@ services:
 volumes:
   postgres_data:
   static_volume:
+  media_volume:
   redisdata:
