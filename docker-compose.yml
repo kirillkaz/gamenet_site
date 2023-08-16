@@ -1,21 +1,19 @@
-version: '1.0'
+version: '2.0'
 
 services:
   s3:
     image: minio/minio
     restart: on-failure
-    # ports:
-    #   - 9000:9000
-    #   - 9090:9090
+    ports:
+       - 9000:9000
+       - 9090:9090
     volumes:
       - s3:/data
     environment:
       - MINIO_ROOT_USER=minio
       - MINIO_ROOT_PASSWORD=12345678
+      - MINIO_ACCESS_KEY=minioadmin
     command: server --console-address :9090 --address :9000 /data
-    expose:
-      - 9000
-      - 9090
   web:
     build: ./gameNetProj
     volumes:
@@ -32,6 +30,7 @@ services:
       - ./.env.dev
     depends_on:
       - db
+      - s3
   db:
     image: postgres:15
     volumes:

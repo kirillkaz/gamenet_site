@@ -109,27 +109,29 @@ REDIS_HOST = os.environ.get('REDIS_HOST', '0.0.0.0')
 REDIS_PORT = 6379
 
 #minio db
-AWS_ACCESS_KEY_ID = os.environ.get('MINIO_ACCESS_KEY')
-AWS_SECRET_ACCESS_KEY = os.environ.get('MINIO_SECRET_KEY')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('BUCKET_NAME')
-AWS_S3_ENDPOINT_URL = os.environ.get('MINIO_URL')
+MINIO_STORAGE_ACCESS_KEY = os.environ.get('MINIO_ACCESS_KEY')
+MINIO_STORAGE_SECRET_KEY = os.environ.get('MINIO_SECRET_KEY')
+MINIO_STORAGE_BUCKET_NAME = os.environ.get('BUCKET_NAME')
+MINIO_STORAGE_ENDPOINT = os.environ.get('MINIO_URL')
+MINIO_ROOT_USER = os.environ.get('MINIO_ROOT_USER')
+MINIO_ROOT_PASSWORD = os.environ.get('MINIO_ROOT_PASSWORD')
 
-AWS_S3_OBJECT_PARAMETERS = {
+MINIO_STORAGE_MEDIA_OBJECT_METADATA = {
     'CacheControl': 'max-age=86400',
 }
 
-AWS_PUBLIC_MEDIA_LOCATION = 'media'
-DEFAULT_FILE_STORAGE = 'ezevent_api.storage_backends.PublicMediaStorage'
+MINIO_STORAGE_MEDIA_URL = 'media'
+DEFAULT_FILE_STORAGE = 'minio_storage.storage.MinioMediaStorage'
 
 client = Minio(
     os.environ.get('MINIO_DOMAIN'),
-    access_key=AWS_ACCESS_KEY_ID,
-    secret_key=AWS_SECRET_ACCESS_KEY,
-    secure=os.environ.get('MINIO_SECURE') == 'True'
+    access_key=MINIO_ROOT_USER,
+    secret_key=MINIO_ROOT_PASSWORD,
+    secure=os.environ.get('MINIO_SECURE') == True,
 )
 
-# found = client.bucket_exists(AWS_STORAGE_BUCKET_NAME)
-# if not found: client.make_bucket(AWS_STORAGE_BUCKET_NAME)
+found = client.bucket_exists(MINIO_STORAGE_BUCKET_NAME)
+if not found: client.make_bucket(MINIO_STORAGE_BUCKET_NAME)
 
 #пока что не нужно
 # AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
