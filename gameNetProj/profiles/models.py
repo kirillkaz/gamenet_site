@@ -35,7 +35,7 @@ this modell created for users galaryes
 class UserImages(models.Model):
     id = models.IntegerField(primary_key=True)
     user_id = models.ForeignKey('profiles.User', on_delete=models.CASCADE)
-    image = models.CharField()
+    image = models.ImageField()
 
 
 '''

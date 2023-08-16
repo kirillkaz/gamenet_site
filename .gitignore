@@ -5,9 +5,12 @@ gameNetProj/pyproject.toml
 gameNetProj/venv/
 gameNetProj/config/__pycache__
 gameNetProj/profiles/__pycache__
+gameNetProj/activityApp/__pycache__
+gameNetProj/groups/__pycache__
+gameNetProj/platforms/__pycache__
 gameNetProj/__pycache__
 ssh_key.pub
-gemeNetProj/profiles/migrations/__pycache__
-gemeNetProj/activityApp/migrations/__pycache__
-gemeNetProj/groups/migrations/__pycache__
-gemeNetProj/platforms/migrations/__pycache__
+gameNetProj/profiles/migrations/__pycache__
+gameNetProj/activityApp/migrations/__pycache__
+gameNetProj/groups/migrations/__pycache__
+gameNetProj/platforms/migrations/__pycache__

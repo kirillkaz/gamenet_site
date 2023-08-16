@@ -1,0 +1,3 @@
+DjangoExampleApplication
+DjangoExampleProject
+django_minio_backend
