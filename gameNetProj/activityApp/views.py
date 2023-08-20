@@ -32,4 +32,9 @@ class PostsAPIView(APIView):
         posts.extend(fr_posts[:])
         posts = sorted(posts, key=lambda post: post['date'])
         return Response({'posts': list(posts)})
+    
+
+def news_page_view(request):
+    context = {}
+    return render(request, 'news_page.html', context)
 

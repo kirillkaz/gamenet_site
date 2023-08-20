@@ -116,6 +116,8 @@ MINIO_STORAGE_ENDPOINT = os.environ.get('MINIO_URL')
 MINIO_ROOT_USER = os.environ.get('MINIO_ROOT_USER')
 MINIO_ROOT_PASSWORD = os.environ.get('MINIO_ROOT_PASSWORD')
 
+MINIO_PUBLIC_BUCKETS = ['media']
+
 MINIO_STORAGE_MEDIA_OBJECT_METADATA = {
     'CacheControl': 'max-age=86400',
 }
@@ -196,7 +198,6 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

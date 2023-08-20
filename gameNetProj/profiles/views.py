@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.contrib.auth import login, authenticate
 from .forms import CustomRegisterForm, CustomAuthForm
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.views import LoginView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .models import User
 
 
@@ -21,12 +21,13 @@ def register_auth(request):
                 user.refresh_from_db()
                 user.save()
                 login(request, user)
-                return HttpResponse(f'<h1>{user.login} Успех!</h1>')
+                return redirect(reverse('activityApp:news_page'))
         
         elif auth_form.is_valid():
             user = authenticate(login=auth_form.cleaned_data['login'], password=auth_form.cleaned_data['password'])
             if user is not None:
                 login(request, user)
+                return redirect(reverse('activityApp:news_page'))
 
         else:
             register_form = CustomRegisterForm()
@@ -41,6 +42,3 @@ def register_auth(request):
         'auth_form': auth_form,
     }
     return render(request, 'auth_register/register_auth.html', context=context)
-
-def main_page_view(request):
-    pass
