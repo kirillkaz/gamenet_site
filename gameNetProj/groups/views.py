@@ -3,8 +3,15 @@ from .forms import GroupForm
 from .models import Group
 from django.views.decorators.csrf import csrf_exempt
 from profiles.models import User
-import boto3
-from config import settings
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .serializers import GroupSerializer
+
+class GroupsAPIView(APIView):
+    def get(self, request, user_login):
+        user_groups = Group.objects.filter(subscribers__login=user_login)
+        return Response({'groups': GroupSerializer(user_groups, many=True).data})
 
 #почти работает(картинки не загружаются)
 @csrf_exempt
@@ -51,4 +58,6 @@ def group_create_view(request):
     return render(request, 'testpages/test_page.html', context)
 
 
-# Create your views here.
+def groups_page_view(request):
+    context  = {}
+    return render(request, 'groups_page.html', context)
