@@ -219,3 +219,8 @@ header{
     border-radius: 15px;
     border: 0px;
 }
+
+.groups_search .search_field{
+    margin-top: 30px;
+    width: 90%;
+}

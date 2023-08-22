@@ -1,3 +1,6 @@
+from io import BytesIO
+import requests
+
 from django.shortcuts import render, HttpResponse
 from .forms import GroupForm
 from .models import Group
@@ -6,6 +9,7 @@ from profiles.models import User
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.parsers import JSONParser
 from .serializers import GroupSerializer
 
 class GroupsAPIView(APIView):
@@ -58,6 +62,19 @@ def group_create_view(request):
     return render(request, 'testpages/test_page.html', context)
 
 
+def get_groups_api():
+    url = f'http://37.139.33.69/api/v1/groups/kirill'
+    req = requests.get(url)
+    return req.text
+
+
 def groups_page_view(request):
-    context  = {}
+    #try:
+    data = get_groups_api()
+    #cleaned_data = JSONParser.parse(BytesIO(data))
+    #obj_avatar = cleaned_data['0']['avatar']
+    obj_avatar = ''
+    #except:
+     #   obj = ''
+    context  = {'obj_avatar': obj_avatar}
     return render(request, 'groups_page.html', context)
