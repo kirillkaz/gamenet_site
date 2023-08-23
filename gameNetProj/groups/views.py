@@ -1,5 +1,10 @@
+import os
 from io import BytesIO
-import requests
+from config.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+import boto3
+import boto3.s3 as bs3
+from botocore.client import Config
+import base64
 
 from django.shortcuts import render, HttpResponse
 from .forms import GroupForm
@@ -62,19 +67,17 @@ def group_create_view(request):
     return render(request, 'testpages/test_page.html', context)
 
 
-def get_groups_api():
-    url = f'http://37.139.33.69/api/v1/groups/kirill'
-    req = requests.get(url)
-    return req.text
-
-
 def groups_page_view(request):
-    #try:
-    data = get_groups_api()
-    #cleaned_data = JSONParser.parse(BytesIO(data))
-    #obj_avatar = cleaned_data['0']['avatar']
-    obj_avatar = ''
-    #except:
-     #   obj = ''
-    context  = {'obj_avatar': obj_avatar}
+
+
+    s3 = boto3.resource('s3',
+                        endpoint_url='http://s3:9000',
+                        aws_access_key_id=AWS_ACCESS_KEY_ID,
+                        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+                        config=Config(signature_version='s3v4'),
+                        region_name='eu-west-1')
+    buf = BytesIO()
+    s3.Bucket('media-bucket').download_fileobj('snake.png', buf)
+    
+    context  = {'bytes': base64.b64encode(buf.getvalue()).decode('utf-8')}
     return render(request, 'groups_page.html', context)
