@@ -224,3 +224,53 @@ header{
     margin-top: 30px;
     width: 90%;
 }
+
+.groups_list{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.groups_list hr{
+    width: 80%;
+    align-self: center;
+    color: #B3B3B3;
+}
+
+.group{
+    display: flex;
+    flex-direction: row;
+    margin-left: 10%;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.group:first-child{
+    margin-top: 0px;
+}
+
+
+.group_text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+    margin-left: 20px;
+}
+
+.group_name{
+    margin-bottom: 5px;
+}
+
+.group_subscribers{
+    color: #909090;
+    font-size: 10px;
+}
+
+.group_avatar img{
+    width: 73px;
+    height: 73px;
+    border-radius: 50%;
+}

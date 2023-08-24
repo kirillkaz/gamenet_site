@@ -73,7 +73,19 @@
                     <input class="search_field" type="text" placeholder="Поиск"></input>
                 </form>
             </div>
-	    <img src="data:image/png;base64,{{ bytes }}">
+
+        <div class="groups_list">
+            {% for group in groups%}
+                <div class="group">
+                    <div class="group_avatar"><img src="data:image/png;base64,{{group.avatar}}"></div>
+                    <div class="group_text">
+                        <div class="group_name">{{group.name}}</div>
+                        <div class="group_subscribers">Всего подписчиков: {{group.subscribers}}</div>
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
         </div>
         <div class="games_block">asdasd</div>
     </div>

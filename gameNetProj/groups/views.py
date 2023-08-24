@@ -68,7 +68,12 @@ def group_create_view(request):
 
 
 def groups_page_view(request):
+    user = User.objects.get(login=request.user.login)
+    user_groups = Group.objects.filter(subscribers__login=user.login)
+    json_groups = GroupSerializer(user_groups, many=True).data
 
+
+    cleaned_groups = []
 
     s3 = boto3.resource('s3',
                         endpoint_url='http://s3:9000',
@@ -76,8 +81,23 @@ def groups_page_view(request):
                         aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
                         config=Config(signature_version='s3v4'),
                         region_name='eu-west-1')
-    buf = BytesIO()
-    s3.Bucket('media-bucket').download_fileobj('snake.png', buf)
     
-    context  = {'bytes': base64.b64encode(buf.getvalue()).decode('utf-8')}
+    class cleaned_group:
+            def __init__(self, g_name, g_avatar, g_subscribers):
+                self.name = g_name
+                self.avatar = g_avatar
+                self.subscribers = g_subscribers
+
+    for json_g in json_groups:
+
+        buf = BytesIO()
+        s3.Bucket('media-bucket').download_fileobj(json_g['avatar_name'], buf)
+        cleaned_img = base64.b64encode(buf.getvalue()).decode('utf-8')
+
+        cleaned_groups.append(cleaned_group(
+            g_name=json_g['name'],
+            g_avatar=cleaned_img,
+            g_subscribers=json_g['subscribers_count']))
+
+    context  = {'groups': cleaned_groups}
     return render(request, 'groups_page.html', context)
