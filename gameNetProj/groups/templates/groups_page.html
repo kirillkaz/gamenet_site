@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -60,8 +61,8 @@
         <div class="groups_block">
             <div class="buttons">
                 <div class="nav_buttons">
-                    <div class="nav_button active">Ваши группы</div>
-                    <div class="nav_button">Администрирование</div>
+                    <div id="user_subscriber" class="nav_button active" onclick="getSubsGroups()">Ваши группы</div>
+                    <div id="user_admin" class="nav_button" onclick="getAdmGroups()">Администрирование</div>
                 </div>
                 <div class="create_button_block">
                     <div class="create_button">Создать группу</div>
@@ -74,7 +75,7 @@
                 </form>
             </div>
 
-        <div class="groups_list">
+        <div id="groups_list" class="groups_list">
             {% for group in groups%}
                 <div class="group">
                     <div class="group_avatar"><img src="data:image/png;base64,{{group.avatar}}"></div>
@@ -89,5 +90,6 @@
         </div>
         <div class="games_block">asdasd</div>
     </div>
+<script src="{%static 'groups/scripts/group_ajax.js'%}"></script>
 </body>
 </html>

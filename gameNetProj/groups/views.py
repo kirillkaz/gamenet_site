@@ -1,11 +1,10 @@
-import os
 from io import BytesIO
 from config.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 import boto3
-import boto3.s3 as bs3
 from botocore.client import Config
 import base64
 
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render, HttpResponse
 from .forms import GroupForm
 from .models import Group
@@ -14,7 +13,6 @@ from profiles.models import User
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.parsers import JSONParser
 from .serializers import GroupSerializer
 
 class GroupsAPIView(APIView):
@@ -67,37 +65,101 @@ def group_create_view(request):
     return render(request, 'testpages/test_page.html', context)
 
 
-def groups_page_view(request):
-    user = User.objects.get(login=request.user.login)
-    user_groups = Group.objects.filter(subscribers__login=user.login)
-    json_groups = GroupSerializer(user_groups, many=True).data
+'''
+this function get groups by usertype and client type in group
+in usertype:
+subscriber - get groups where user is subscriber
+admin - get groups where user is administrator
 
+in client type:
+client - user
+ajax - ajax
+'''
+def get_groups_context(request, p_type:str, client_type:str):
 
+    #get current user login
+    login = request.user.login
+
+    #get grupst by usertype in groups
+    if p_type == 'subscriber':
+        user_groups = Group.objects.filter(subscribers__login=login)
+        json_groups = GroupSerializer(user_groups, many=True).data
+
+    elif p_type == 'admin':
+        user = User.objects.get(login=login)
+        user_groups = Group.objects.filter(owner_id=login)
+        json_groups = GroupSerializer(user_groups, many=True).data
+
+    #array for returm
     cleaned_groups = []
 
+    #connection to minio database
     s3 = boto3.resource('s3',
-                        endpoint_url='http://s3:9000',
-                        aws_access_key_id=AWS_ACCESS_KEY_ID,
-                        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-                        config=Config(signature_version='s3v4'),
-                        region_name='eu-west-1')
-    
+                            endpoint_url='http://s3:9000',
+                            aws_access_key_id=AWS_ACCESS_KEY_ID,
+                            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+                            config=Config(signature_version='s3v4'),
+                            region_name='eu-west-1')
+
+    #class for context
     class cleaned_group:
-            def __init__(self, g_name, g_avatar, g_subscribers):
-                self.name = g_name
-                self.avatar = g_avatar
-                self.subscribers = g_subscribers
+                def __init__(self, g_name, g_avatar, g_subscribers):
+                    self.name = g_name
+                    self.avatar = g_avatar
+                    self.subscribers = g_subscribers
 
-    for json_g in json_groups:
+    #filling context
+    if client_type == 'client':
+        for json_g in json_groups:
+                buf = BytesIO()
+                s3.Bucket('media-bucket').download_fileobj(json_g['avatar_name'], buf)
+                cleaned_img = base64.b64encode(buf.getvalue()).decode('utf-8')
 
-        buf = BytesIO()
-        s3.Bucket('media-bucket').download_fileobj(json_g['avatar_name'], buf)
-        cleaned_img = base64.b64encode(buf.getvalue()).decode('utf-8')
+                cleaned_groups.append(cleaned_group(
+                    g_name=json_g['name'],
+                    g_avatar=cleaned_img,
+                    g_subscribers=json_g['subscribers_count']))
+                
+    elif client_type == 'ajax':
+        for json_g in json_groups:
+                buf = BytesIO()
+                s3.Bucket('media-bucket').download_fileobj(json_g['avatar_name'], buf)
+                cleaned_img = base64.b64encode(buf.getvalue()).decode('utf-8')
 
-        cleaned_groups.append(cleaned_group(
-            g_name=json_g['name'],
-            g_avatar=cleaned_img,
-            g_subscribers=json_g['subscribers_count']))
+                cleaned_groups.append({
+                     'name': json_g['name'],
+                     'avatar': cleaned_img,
+                     'subscribers': json_g['subscribers_count'],
+                })
+    
+    return cleaned_groups
 
+
+def groups_page_view(request):
+    cleaned_groups = get_groups_context(request, 'subscriber', 'client')
     context  = {'groups': cleaned_groups}
     return render(request, 'groups_page.html', context)
+
+
+def get_subscribed_groups(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+    if is_ajax:
+        if request.method == 'GET':
+            context = get_groups_context(request, 'subscriber', 'ajax')
+            return JsonResponse({'context': context})
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+    else:
+        return HttpResponseBadRequest('Invalid request')
+
+
+def get_administrate_groups(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+    if is_ajax:
+        if request.method == 'GET':
+            context = get_groups_context(request, 'admin', 'ajax')
+            return JsonResponse({'context': context})
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+    else:
+        return HttpResponseBadRequest('Invalid request')
