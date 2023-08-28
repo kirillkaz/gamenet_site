@@ -55,7 +55,6 @@ const getAdmGroups = () => {
         }
     })
 }
-
 // $(document).ready(function() {
 //     getSubsGroups()
 //     getAdmGroups()

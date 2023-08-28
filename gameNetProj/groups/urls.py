@@ -4,7 +4,8 @@ from .views import group_create_view,\
     groups_page_view,\
     GroupsAPIView,\
     get_subscribed_groups,\
-    get_administrate_groups
+    get_administrate_groups,\
+    group_create_page
 
 app_name = 'groups'
 
@@ -14,6 +15,7 @@ urlpatterns = {
     path('groups/ajax/', include([
         path('subscriber', get_subscribed_groups, name='groups_ajax_subscriber'),
         path('admin', get_administrate_groups, name='groups_ajax_admin'),
+        path('groupcreation', group_create_page, name='groups_ajax_creation'),
     ])),
     path('api/v1/groups/<str:user_login>', GroupsAPIView.as_view(), name='groups_api'),
 }

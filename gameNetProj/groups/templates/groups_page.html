@@ -42,6 +42,8 @@
         </div>
     </header>
 
+    <div id="group_creation"></div>
+
     <div class="main_news_block">
         <div class="nav_block">
             <div class="messedger_link">
@@ -64,7 +66,7 @@
                     <div id="user_subscriber" class="nav_button active" onclick="getSubsGroups()">Ваши группы</div>
                     <div id="user_admin" class="nav_button" onclick="getAdmGroups()">Администрирование</div>
                 </div>
-                <div class="create_button_block">
+                <div class="create_button_block" onclick="showCreateWindow()">
                     <div class="create_button">Создать группу</div>
                 </div>
             </div>
@@ -91,5 +93,6 @@
         <div class="games_block">asdasd</div>
     </div>
 <script src="{%static 'groups/scripts/group_ajax.js'%}"></script>
+<script src="{%static 'groups/scripts/create_group.js'%}"></script>
 </body>
 </html>
