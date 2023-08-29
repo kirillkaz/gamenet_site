@@ -274,3 +274,58 @@ header{
     height: 73px;
     border-radius: 50%;
 }
+
+.overshaddow {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 100;
+}
+
+#group_creation form{
+    position: absolute;
+    display: flex;
+    width: 800px;
+    height: 440px;
+    left: 31%;
+    top: 31%;
+    flex-direction: row;
+    background-color: #F3F2FF;
+    border: 4px solid #A7A6CE;
+    border-radius: 15px;
+    z-index: 200;
+}
+
+.g_text{
+    display: flex;
+    flex-direction: column;
+}
+
+.exit{
+    z-index:201;
+}
+
+/* inputs */
+.g_name, .g_description{
+    width: 57.5%;
+}
+
+.group_name, .group_description {
+    width: 100%;
+    background-color: #E2E3FF;
+
+    font-size: 14px;
+
+    padding-left: 10px;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    margin-bottom: 40px;
+
+    border: none;
+    border-radius: 7px;
+
+    /* ::-webkit-input-placeholder{
+        color: #9591C3;
+    } */
+}

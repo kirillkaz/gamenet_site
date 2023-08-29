@@ -2,10 +2,13 @@
 
 <form method="post" enctype="multipart/form-data" id="group_creationform">
     {% csrf_token %}
+    <div class="exit" onclick="hideCreateWindow()">X</div>
     <div class="g_avatar">{{ form.avatar }}</div>
     <div class="g_text">
         <div class="g_name">{{ form.name }}</div>
         <div class="g_description">{{ form.description }}</div>
     </div>
 </form>
+
+<div class="overshaddow"></div>
 <script src="{%static 'groups/scripts/img_script.js'%}"></script>
