@@ -269,10 +269,15 @@ header{
     font-size: 10px;
 }
 
-.group_avatar img{
-    width: 73px;
-    height: 73px;
-    border-radius: 50%;
+.group_avatar{
+    display: none;
+}
+
+.creationform_fields{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 43px;
 }
 
 .overshaddow {
@@ -290,7 +295,7 @@ header{
     height: 440px;
     left: 31%;
     top: 31%;
-    flex-direction: row;
+    flex-direction: column;
     background-color: #F3F2FF;
     border: 4px solid #A7A6CE;
     border-radius: 15px;
@@ -300,15 +305,20 @@ header{
 .g_text{
     display: flex;
     flex-direction: column;
+    width: 57.5%;
 }
 
 .exit{
+    font-size: 24px;
+    width:10%;
+    text-align: center;
+    color: #8388FF;
     z-index:201;
 }
 
 /* inputs */
 .g_name, .g_description{
-    width: 57.5%;
+    width: 100%;
 }
 
 .group_name, .group_description {
@@ -328,4 +338,61 @@ header{
     /* ::-webkit-input-placeholder{
         color: #9591C3;
     } */
+}
+
+.group_description{
+    height: 108px;
+}
+
+.submit_button{
+    width: 70%;
+    font-size:24px;
+    background-color: #05E200;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding-left: 0px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.groupcreation_name{
+    width:90%;
+    font-size: 24px;
+    text-align: center;
+    color: #9A89FF;
+}
+
+.form_header{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 28px;
+}
+
+.input_field-img-icon-wrapper{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 203px;
+    height: 203px;
+    margin-left: 23px;
+    margin-right: 26px;
+}
+
+.dotted-border{
+    border: 2px dotted #9A89FF;
+    border-radius: 50%;
+}
+
+.input_field-img-icon{
+    width: 46px;
+    height: 46px;
+}
+
+.loaded_img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
 }

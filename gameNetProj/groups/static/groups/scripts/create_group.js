@@ -1,7 +1,7 @@
 const showCreateWindow = () => {
     $.ajax({
         type: "get",
-        url: "http://37.139.33.69/groups/ajax/groupcreation",
+        url: "http://0.0.0.0/groups/ajax/groupcreation",
         success: (data) => {
             console.log(data)
             $('#group_creation').empty();

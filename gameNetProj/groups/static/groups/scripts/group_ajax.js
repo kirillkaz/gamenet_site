@@ -1,6 +1,6 @@
 const getSubsGroups = () => {
     $.ajax({
-        url: `http://37.139.33.69/groups/ajax/subscriber`,
+        url: `http://0.0.0.0/groups/ajax/subscriber`,
         type: 'GET',
         dataType: 'json',
         success: (data) => {
@@ -29,7 +29,7 @@ const getSubsGroups = () => {
 
 const getAdmGroups = () => {
     $.ajax({
-        url: `http://37.139.33.69/groups/ajax/admin`,
+        url: `http://0.0.0.0/groups/ajax/admin`,
         type: 'GET',
         dataType: 'json',
         success: (data) => {
