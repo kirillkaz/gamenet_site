@@ -93,24 +93,6 @@ def get_groups_context(request, p_type:str, client_type:str):
 
 @csrf_exempt
 def groups_page_view(request):
-    # if request.method == 'POST':
-    #      form=GroupForm(request.POST, request.FILES)
-
-    #      if form.is_valid():
-    #         user = User.objects.get(login=request.user.login)
-    #         new_group = Group.objects.create(owner_id=user)
-
-    #         new_group.owner_id = user
-    #         new_group.name = form.cleaned_data.get('name')
-    #         new_group.description = form.cleaned_data.get('description')
-    #         new_group.avatar = form.cleaned_data.get('avatar')
-
-    #         # raw_subscribers = form.cleaned_data.get('subscribers')
-    #         # group_subscribers = User.objects.filter(login__in=raw_subscribers)
-    #         # new_group.subscribers.set(group_subscribers)
-
-    #         new_group.save()
-
     cleaned_groups = get_groups_context(request, 'subscriber', 'client')
     context  = {'groups': cleaned_groups}
     return render(request, 'groups_page.html', context)
@@ -127,7 +109,7 @@ def create_group(request):
         new_group.name = form.cleaned_data.get('name')
         new_group.description = form.cleaned_data.get('description')
         new_group.avatar = form.cleaned_data.get('avatar')
-
+        new_group.subscribers.add(user)
         # raw_subscribers = form.cleaned_data.get('subscribers')
         # group_subscribers = User.objects.filter(login__in=raw_subscribers)
         # new_group.subscribers.set(group_subscribers)
@@ -220,6 +202,6 @@ def group_create_page(request):
         form = GroupForm()
         context = {'form': form}
 
-        return render(request, 'ajax/groupCreationPage.html', context)
+        # return render(request, 'ajax/groupCreationPage.html', context)
         return HttpResponseBadRequest('Invalid request')
             

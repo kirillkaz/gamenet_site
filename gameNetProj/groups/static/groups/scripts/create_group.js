@@ -1,30 +1,3 @@
-// $.ajaxSetup({ 
-//     beforeSend: function(xhr, settings) {
-//         function getCookie(name) {
-//             var cookieValue = null;
-//             if (document.cookie && document.cookie != '') {
-//                 var cookies = document.cookie.split(';');
-//                 for (var i = 0; i < cookies.length; i++) {
-//                     var cookie = jQuery.trim(cookies[i]);
-//                     // Does this cookie string begin with the name we want?
-//                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
-//                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-//                         break;
-//                     }
-//                 }
-//             }
-//             return cookieValue;
-//         }
-//         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-//             // Only send the token to relative URLs i.e. locally.
-//         console.log('all_is good')
-//         xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-//         }
-//         xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-//         console.log('it s work but...')
-//     } 
-// });
-
 const showCreateWindow = () => {
     $.ajax({
         type: "get",
@@ -58,5 +31,16 @@ const CreateGroup = (u_login, u_password) => {
 }
 
 const hideCreateWindow = () => {
+    let cur_tab = $('.active').get(0);
+    cur_tab = cur_tab.innerHTML
+
     $('#group_creation').empty()
+
+    if (cur_tab == 'Ваши группы'){
+        getSubsGroups()
+    }
+
+    else if (cur_tab == 'Администрирование'){
+        getAdmGroups()
+    }
 }
