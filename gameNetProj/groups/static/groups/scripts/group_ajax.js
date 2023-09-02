@@ -9,7 +9,6 @@ const getSubsGroups = () => {
             $('#user_subscriber').addClass('active');
             $('#user_admin').removeClass('active');
 
-            console.log(data);
             for (elem of data.context){
                 $('#groups_list').append(`<div class="group">
                 <div class="group_avatar"><img src="data:image/png;base64,${elem.avatar}"></div>
@@ -33,6 +32,7 @@ const getAdmGroups = () => {
         type: 'GET',
         dataType: 'json',
         success: (data) => {
+            
             $('#groups_list').empty();
             
             $('#user_subscriber').removeClass('active');

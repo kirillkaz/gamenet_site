@@ -73,7 +73,7 @@
 
 	     <div class="groups_search">
                 <form>
-                    <input class="search_field" type="text" placeholder="Поиск"></input>
+                    <input class="search_field" type="text" placeholder="Поиск" oninput="findSubsGroups(this.value)"></input>
                 </form>
             </div>
 
@@ -94,5 +94,6 @@
     </div>
 <script src="{%static 'groups/scripts/group_ajax.js'%}"></script>
 <script src="{%static 'groups/scripts/create_group.js'%}"></script>
+<script src="{%static 'groups/scripts/group_finder.js'%}"></script>
 </body>
 </html>

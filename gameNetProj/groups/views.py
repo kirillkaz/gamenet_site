@@ -110,6 +110,7 @@ def create_group(request):
         new_group.description = form.cleaned_data.get('description')
         new_group.avatar = form.cleaned_data.get('avatar')
         new_group.subscribers.add(user)
+
         # raw_subscribers = form.cleaned_data.get('subscribers')
         # group_subscribers = User.objects.filter(login__in=raw_subscribers)
         # new_group.subscribers.set(group_subscribers)
@@ -158,10 +159,6 @@ def group_create_view(request):
                 new_group.name = form.cleaned_data.get('name')
                 new_group.description = form.cleaned_data.get('description')
                 new_group.avatar = form.cleaned_data.get('avatar')
-
-                # raw_subscribers = form.cleaned_data.get('subscribers')
-                # group_subscribers = User.objects.filter(login__in=raw_subscribers)
-                # new_group.subscribers.set(group_subscribers)
 
                 new_group.save()
 
