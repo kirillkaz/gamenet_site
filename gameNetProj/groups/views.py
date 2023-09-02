@@ -93,28 +93,46 @@ def get_groups_context(request, p_type:str, client_type:str):
 
 @csrf_exempt
 def groups_page_view(request):
-    if request.method == 'POST':
-         form=GroupForm(request.POST, request.FILES)
+    # if request.method == 'POST':
+    #      form=GroupForm(request.POST, request.FILES)
 
-         if form.is_valid():
-            user = User.objects.get(login=request.user.login)
-            new_group = Group.objects.create(owner_id=user)
+    #      if form.is_valid():
+    #         user = User.objects.get(login=request.user.login)
+    #         new_group = Group.objects.create(owner_id=user)
 
-            new_group.owner_id = user
-            new_group.name = form.cleaned_data.get('name')
-            new_group.description = form.cleaned_data.get('description')
-            new_group.avatar = form.cleaned_data.get('avatar')
+    #         new_group.owner_id = user
+    #         new_group.name = form.cleaned_data.get('name')
+    #         new_group.description = form.cleaned_data.get('description')
+    #         new_group.avatar = form.cleaned_data.get('avatar')
 
-            # raw_subscribers = form.cleaned_data.get('subscribers')
-            # group_subscribers = User.objects.filter(login__in=raw_subscribers)
-            # new_group.subscribers.set(group_subscribers)
+    #         # raw_subscribers = form.cleaned_data.get('subscribers')
+    #         # group_subscribers = User.objects.filter(login__in=raw_subscribers)
+    #         # new_group.subscribers.set(group_subscribers)
 
-            new_group.save()
+    #         new_group.save()
 
     cleaned_groups = get_groups_context(request, 'subscriber', 'client')
     context  = {'groups': cleaned_groups}
     return render(request, 'groups_page.html', context)
 
+
+def create_group(request):
+    form=GroupForm(request.POST, request.FILES)
+
+    if form.is_valid():
+        user = User.objects.get(login=request.user.login)
+        new_group = Group.objects.create(owner_id=user)
+
+        new_group.owner_id = user
+        new_group.name = form.cleaned_data.get('name')
+        new_group.description = form.cleaned_data.get('description')
+        new_group.avatar = form.cleaned_data.get('avatar')
+
+        # raw_subscribers = form.cleaned_data.get('subscribers')
+        # group_subscribers = User.objects.filter(login__in=raw_subscribers)
+        # new_group.subscribers.set(group_subscribers)
+        new_group.save()
+    
 
 def get_subscribed_groups(request):
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
@@ -124,6 +142,7 @@ def get_subscribed_groups(request):
             context = get_groups_context(request, 'subscriber', 'ajax')
             return JsonResponse({'context': context})
         return JsonResponse({'status': 'Invalid request'}, status=400)
+        
     else:
         return HttpResponseBadRequest('Invalid request')
 
@@ -192,7 +211,11 @@ def group_create_page(request):
             context = {'form': form}
 
             return render(request, 'ajax/groupCreationPage.html', context)
-        return JsonResponse({'status': 'Invalid request'}, status=400)
+        
+        elif request.method == 'POST':
+            create_group(request)
+
+        return JsonResponse({}, status=200)
     else:
         form = GroupForm()
         context = {'form': form}

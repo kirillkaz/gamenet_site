@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from groups.models import Group
 from profiles.models import User, User_Friends
+from .links import GROUP_LINK
 
 class PostsAPIView(APIView):
     def get(self, request, user_login):
@@ -35,6 +36,6 @@ class PostsAPIView(APIView):
     
 
 def news_page_view(request):
-    context = {}
+    context = {'groups_link': GROUP_LINK}
     return render(request, 'news_page.html', context)
 

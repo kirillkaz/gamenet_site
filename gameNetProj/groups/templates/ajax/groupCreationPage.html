@@ -21,7 +21,7 @@
         <div class="g_text">
             <div class="g_name">{{ form.name }}</div>
             <div class="g_description">{{ form.description }}</div>
-            <input class="submit_button" name='signtype' type="submit" value='Создать группу!'> 
+            <input class="submit_button" name='signtype' type="button" value='Создать группу!' onclick="CreateGroup('{{request.user.login}}', '{{request.user.password}}')"> 
         </div>
     </div>
 </form>

@@ -169,3 +169,8 @@ header{
     margin-left: 8px;
     font-size: 14px;
 }
+
+a{
+    color:#000000;
+    text-decoration: none;
+}
