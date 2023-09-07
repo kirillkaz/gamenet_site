@@ -42,3 +42,8 @@ def register_auth(request):
         'auth_form': auth_form,
     }
     return render(request, 'auth_register/register_auth.html', context=context)
+
+
+def profiles_page(request, username):
+    context = {}
+    return render(request, 'profiles/profiles.html', context=context)
