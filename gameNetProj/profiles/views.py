@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy, reverse
 from .models import User
+from django.http import JsonResponse, HttpResponseBadRequest
 
 
 @csrf_exempt
@@ -47,3 +48,17 @@ def register_auth(request):
 def profiles_page(request, username):
     context = {}
     return render(request, 'profiles/profiles.html', context=context)
+
+
+def profile_menu_ajax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+    if is_ajax:
+        if request.method == 'GET':
+            context = {}
+            return render(request, 'ajax/profiles_ajax.html', context)
+        else:
+            return JsonResponse({'req_error': 'invalid request'}, status=400)
+        
+    else:
+        return HttpResponseBadRequest('Invalid request')

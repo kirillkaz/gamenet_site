@@ -145,11 +145,6 @@ header{
     margin-left: 20%;
 }
 
-.games_block{
-    border-left: 3px solid #E3E3E3;
-    margin-left: 32px;
-}
-
 .news_block{
     background-color: #FCFCFC;
     border: 3px solid #E3E3E3;
@@ -179,6 +174,9 @@ a{
 }
 
 .main_block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width:856px;
 }
 
@@ -201,4 +199,52 @@ a{
     width: 139px;
     border: 15px solid white;
     border-radius: 50%;
+}
+
+.galary{
+    width: 730px;
+    height: 303px;
+    border-radius: 15px;
+    border: 2px solid #E3E3E3;
+    margin-top: 133px;
+}
+
+.games_block{
+    display: flex;
+    flex-direction: column;
+    margin-left: 32px;
+}
+
+.games-platforms{
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    border: 2px solid #E3E3E3;
+    width: 250px;
+    height: 226px;
+}
+
+.games{
+    display: flex;
+    flex-direction: column;
+    margin-top: 134px;
+    border-radius: 15px;
+    border: 2px solid #E3E3E3;
+    width: 250px;
+    height: 226px;
+}
+
+.profile-menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    background-color: white;
+    border: 2px solid #E3E3E3;
+    border-radius: 7px;
+    height: 100px;
+    width: 130px;
+    left: 77%;
+    top:7%;
 }

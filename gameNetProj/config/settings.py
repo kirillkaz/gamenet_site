@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'platforms',
     'groups',
     'activityApp',
-
 ]
 
 MIDDLEWARE = [
