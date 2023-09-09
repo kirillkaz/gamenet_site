@@ -1,10 +1,15 @@
 from django.shortcuts import render
-from .models import GroupPosts, UserPosts
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
+from .models import GroupPosts, UserPosts
 from groups.models import Group
 from profiles.models import User, User_Friends
+
 from .links import GROUP_LINK
+
+from tools.load_avatar import LoadUserAvatar
 
 class PostsAPIView(APIView):
     def get(self, request, user_login):
@@ -36,6 +41,9 @@ class PostsAPIView(APIView):
     
 
 def news_page_view(request):
-    context = {'groups_link': GROUP_LINK}
+    username = request.user.login
+    user_avatar = LoadUserAvatar(username)
+
+    context = {'groups_link': GROUP_LINK, 'user_avatar': user_avatar}
     return render(request, 'news_page.html', context)
 

@@ -55,7 +55,7 @@ class User(PermissionsMixin, AbstractBaseUser):
     name = models.CharField(max_length=100, blank=True)
     surname = models.CharField(max_length=100, blank=True)
     
-    avatar_id = models.IntegerField(default=1)
+    avatar_id = models.IntegerField(default=0)
     galary = models.ManyToManyField(UserImages, related_name='images2users', blank=True)
 
     # is_superuser = models.BooleanField(default=False)

@@ -35,7 +35,7 @@
         
         <div class="User_menu">
             <div class="User_avatar">
-                <img src="../../media/user.png">
+                <img src="data:image/png;base64,{{user_avatar}}">
             </div>
 
             <div class="User_avatar_arrow" onclick="showProfileMenu()">
@@ -44,38 +44,7 @@
         </div>
     </header>
     <div id="menu_block_content"></div>
-
-    {% comment %} <div class="main_profiles_block">
-        <div class="nav_block">
-            <div class="messedger_link">
-                <img src="../../media/speech-bubble.png">
-                <div>Месседжер</div>
-            </div>
-            <a href={{ groups_link }}>
-                <div class="groups_link">
-                    <img src="../../media/group.png">
-                    <div>Группы</div>
-                </div>
-            </a>
-            <div class="news_link">
-                <img src="../../media/newspaper.png">
-                <div>Новости</div>
-            </div>
-
-            <div class="main_block">
-                <div class="profile">
-                    <img class="avatar" src="../../media/user.png">
-                </div>
-                <div class="galary"></div>
-                <div class="posts"></div>
-            </div>
     
-            <div class="games_block">
-                <div class="games-platforms"></div>
-                <div class="your-games"></div>
-            </div>
-        </div>
-    </div> {% endcomment %}
     <div class="main_profiles_block">
         <div class="nav_block">
             <div class="messedger_link">
@@ -96,7 +65,7 @@
 
         <div class="main_block">
             <div class="profile">
-                <img class="avatar" src="../../media/user.png">
+                <img class="avatar" src="data:image/png;base64,{{user_avatar}}">
             </div>
             <div class="galary"></div>
             <div class="posts"></div>

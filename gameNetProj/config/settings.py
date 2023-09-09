@@ -142,6 +142,12 @@ client = Minio(
 found = client.bucket_exists(MINIO_STORAGE_BUCKET_NAME)
 if not found: client.make_bucket(MINIO_STORAGE_BUCKET_NAME)
 
+client.fput_object(
+    bucket_name='media-bucket',
+    object_name='user.png',
+    file_path='media/user.png'
+)
+
 #пока что не нужно
 # AWS_PRIVATE_MEDIA_LOCATION = 'media/private'
 # PRIVATE_FILE_STORAGE = 'ezevent_api.storage_backends.PrivateMediaStorage'

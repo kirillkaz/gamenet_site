@@ -5,8 +5,18 @@ from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy, reverse
-from .models import User
 from django.http import JsonResponse, HttpResponseBadRequest
+
+from .serializers import UserImagesSerializer
+from .models import User, UserImages
+
+from tools.load_avatar import LoadUserAvatar
+
+import boto3
+from botocore.client import Config
+from config.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+from io import BytesIO
+import base64
 
 
 @csrf_exempt
@@ -46,7 +56,9 @@ def register_auth(request):
 
 
 def profiles_page(request, username):
-    context = {}
+    cleaned_img = LoadUserAvatar(username)
+
+    context = {'user_avatar': cleaned_img}
     return render(request, 'profiles/profiles.html', context=context)
 
 

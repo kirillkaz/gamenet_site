@@ -6,14 +6,17 @@ import base64
 
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+
 from .forms import GroupForm
 from .models import Group
-from django.views.decorators.csrf import csrf_exempt
 from profiles.models import User
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import GroupSerializer
+
+from tools.load_avatar import LoadUserAvatar
 
 class GroupsAPIView(APIView):
     def get(self, request, user_login):
@@ -93,8 +96,11 @@ def get_groups_context(request, p_type:str, client_type:str):
 
 @csrf_exempt
 def groups_page_view(request):
+    username = request.user.login
+    user_avatar = LoadUserAvatar(username)
+
     cleaned_groups = get_groups_context(request, 'subscriber', 'client')
-    context  = {'groups': cleaned_groups}
+    context  = {'groups': cleaned_groups, 'user_avatar': user_avatar}
     return render(request, 'groups_page.html', context)
 
 
