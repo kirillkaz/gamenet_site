@@ -35,5 +35,5 @@ class ProfileSettingsForm(forms.Form):
     sex = forms.CharField(widget=forms.TextInput(attrs={'class':'field','placeholder':'Мужчина'}), required=False)
     phone = forms.CharField(widget=forms.TextInput(attrs={'class':'field','placeholder':'Номер телефона'}), required=False)
     birthday = forms.DateField(widget=forms.DateInput(attrs={'class':'field','placeholder':'День рождения'}), required=False)
-    avatar = forms.ImageField(widget=forms.FileInput(attrs={'accept': 'image/', 'onchange': 'download(this)'}), required=False)
-    cover = forms.ImageField(widget=forms.FileInput(attrs={'accept': 'image/', 'onchange': 'download(this)'}), required=False)
+    avatar = forms.ImageField(widget=forms.FileInput(attrs={'accept': 'image/', 'onchange': 'DownloadAvatar(this)'}), required=False)
+    cover = forms.ImageField(widget=forms.FileInput(attrs={'accept': 'image/', 'onchange': 'DownloadCover(this)'}), required=False)

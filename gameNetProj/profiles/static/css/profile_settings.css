@@ -55,15 +55,16 @@ textarea{
     align-items: center;
     width:80%;
     height: 226px;
-    margin: 0 auto 0 auto;
+    margin: 20 auto 0 auto;
     font-size: 24px;
     border-radius: 15px;
     border: 1.5px solid #A3A3A3;
+    color:#B0B0B0;
 }
 
-.input_field-cover{
-    margin-top:20px;
-    color:#B0B0B0;
+.loaded_img{
+    width:80%;
+    height: 226px;
 }
 
 .save-button{
