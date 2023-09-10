@@ -7,7 +7,7 @@ from .models import GroupPosts, UserPosts
 from groups.models import Group
 from profiles.models import User, User_Friends
 
-from .links import GROUP_LINK
+from tools.links import GROUP_LINK
 
 from tools.load_avatar import LoadUserAvatar
 

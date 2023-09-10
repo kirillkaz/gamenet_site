@@ -1,0 +1,38 @@
+<form method="post" enctype="multipart/form-data" id="settings_form">
+    {% csrf_token %}
+    <div class="fields">
+        <div class="text-fields">
+            {{form.name}}
+            {{form.surname}}
+            {{form.status}}
+            {{form.sex}}
+            {{form.phone}}
+            {% comment %} <input type="text" class="field" placeholder="Имя"/>
+            <input type="text" class="field" placeholder="Фамилия"/>
+            <textarea class="field" placeholder="Статус"></textarea>
+            <input class="field" type="text" placeholder="Мужчина"/>
+            <input type="text" class="field" placeholder="Номер телефона"/> {% endcomment %}
+        </div>
+        <div class="avatar-field">
+            {{form.avatar}}
+            {% comment %} <input type="file" id="id_avatar" /> {% endcomment %}
+        </div>
+        <label for="id_avatar">
+            <div class="input_field-img-icon-wrapper">
+                <img class="input_field-img-icon" src="data:image/png;base64,{{user_avatar}}" alt="Выбрать файл">
+            </div>
+        </label>
+    </div>
+
+    <div class="cover-field">
+        {{form.cover}}
+        {% comment %} <input type="file" id="id_cover" /> {% endcomment %}
+    </div>
+
+    <label for="id_avatar">
+        <div class="input_field-cover">
+            Обложка профиля
+        </div>
+    </label>
+    <button type="button" class="save-button" onclick="SaveSettings('profile', '{{request.user.login}}', '{{request.user.password}}')">Сохранить</button>
+</form>

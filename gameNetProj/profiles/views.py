@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import login, authenticate
-from .forms import CustomRegisterForm, CustomAuthForm
+
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.views import LoginView
@@ -8,9 +8,11 @@ from django.urls import reverse_lazy, reverse
 from django.http import JsonResponse, HttpResponseBadRequest
 
 from .serializers import UserImagesSerializer
-from .models import User, UserImages
+from .models import User, UserImages, Bio, User_Friends
+from .forms import CustomRegisterForm, CustomAuthForm, ProfileSettingsForm
 
 from tools.load_avatar import LoadUserAvatar
+from tools.links import SETTINGS_LINK
 
 import boto3
 from botocore.client import Config
@@ -28,9 +30,19 @@ def register_auth(request):
         if 'email' in request.POST:
             register_form = CustomRegisterForm(request.POST)
             if register_form.is_valid():
+                #user creation
                 user = register_form.save()
                 user.refresh_from_db()
                 user.save()
+
+                #bio creation
+                user_bio = Bio.objects.create(user_id=user)
+                user_bio.save()
+
+                #friend list creation
+                user_friends = User_Friends.objects.create(user_id=user)
+                user_friends.save()
+
                 login(request, user)
                 return redirect(reverse('activityApp:news_page'))
         
@@ -67,8 +79,90 @@ def profile_menu_ajax(request):
 
     if is_ajax:
         if request.method == 'GET':
-            context = {}
+            context = {
+                'settings_link': SETTINGS_LINK,
+            }
             return render(request, 'ajax/profiles_ajax.html', context)
+        else:
+            return JsonResponse({'req_error': 'invalid request'}, status=400)
+        
+    else:
+        return HttpResponseBadRequest('Invalid request')
+    
+
+def settigns_page(request):
+    username = request.user.login
+    user_avatar = LoadUserAvatar(username)
+
+    context = {
+        'user_avatar': user_avatar,
+    }
+
+    return render(request, 'profiles/settings.html', context)
+
+
+def profile_settings_ajax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+    if is_ajax:
+        if request.method == 'GET':
+            username = request.user.login
+            user_avatar = LoadUserAvatar(username)
+
+            form = ProfileSettingsForm()
+
+            context = {
+                'user_avatar': user_avatar,
+                'form': form,
+            }
+            return render(request, 'ajax/profile_settings_ajax.html', context)
+        
+        elif request.method == 'POST':
+            form = ProfileSettingsForm(request.POST, request.FILES)
+
+            if form.is_valid():
+                try:
+                    username = request.user.login
+                    user = User.objects.get(login=username)
+                    user_bio = Bio.objects.get(user_id=username)
+
+                    if form.cleaned_data.get('name'):
+                        user.name = form.cleaned_data.get('name')
+
+                    if form.cleaned_data.get('surname'):
+                        user.surname = form.cleaned_data.get('surname')
+
+                    if form.cleaned_data.get('status'):
+                        user_bio.user_description = form.cleaned_data.get('status')
+
+                    if form.cleaned_data.get('sex'):
+                        user_bio.sex = form.cleaned_data.get('sex')[0].upper()
+
+                    if form.cleaned_data.get('phone'):
+                        user.phone = form.cleaned_data.get('phone')
+
+                    if form.cleaned_data.get('avatar'):
+                        user_avatar = UserImages.objects.create(
+                            user_id=user,
+                            image=form.cleaned_data.get('avatar'))
+                        user_avatar.save()
+
+                        user.avatar_id = user_avatar.id
+
+                        user.galary.add(user_avatar)
+
+                    if form.cleaned_data.get('cover'):
+                        user.cover = form.cleaned_data.get('cover')
+
+                    user.save()
+                    user_bio.save()
+
+                    return HttpResponse(f'<h1>Успех!</h1>')
+
+                except:
+                    error = 'Ошибка обработки формы!'
+                    return HttpResponse(f'<h1>{error}</h1>')
+
         else:
             return JsonResponse({'req_error': 'invalid request'}, status=400)
         
