@@ -33,7 +33,7 @@ class UserManager(BaseUserManager):
 this modell created for users galaryes
 '''
 class UserImages(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey('profiles.User', on_delete=models.CASCADE)
     image = models.ImageField()
 
@@ -56,6 +56,8 @@ class User(PermissionsMixin, AbstractBaseUser):
     surname = models.CharField(max_length=100, blank=True)
     
     avatar_id = models.IntegerField(default=0)
+    cover = models.ImageField(blank=True)
+
     galary = models.ManyToManyField(UserImages, related_name='images2users', blank=True)
 
     # is_superuser = models.BooleanField(default=False)
@@ -94,4 +96,4 @@ class Bio(models.Model):
     user_id = models.OneToOneField("User", on_delete=models.CASCADE, primary_key=True)
     user_description = models.CharField(max_length=250, blank=True)
     sex = models.CharField(max_length=1, blank=True)
-    birthday = models.DateField(blank=True)
+    birthday = models.DateField(blank=True, null=True)
