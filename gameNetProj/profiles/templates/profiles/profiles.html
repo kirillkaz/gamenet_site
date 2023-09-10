@@ -65,6 +65,9 @@
 
         <div class="main_block">
             <div class="profile">
+                {% if user_cover != ''%}
+                <img class="cover" src="data:image/png;base64,{{user_cover}}">
+                {% endif %}
                 <img class="avatar" src="data:image/png;base64,{{user_avatar}}">
             </div>
             <div class="galary"></div>

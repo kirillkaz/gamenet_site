@@ -11,7 +11,7 @@ from .serializers import UserImagesSerializer
 from .models import User, UserImages, Bio, User_Friends
 from .forms import CustomRegisterForm, CustomAuthForm, ProfileSettingsForm
 
-from tools.load_avatar import LoadUserAvatar
+from tools.load_avatar import LoadUserAvatar, LoadUserCover
 from tools.links import SETTINGS_LINK
 
 import boto3
@@ -69,8 +69,11 @@ def register_auth(request):
 
 def profiles_page(request, username):
     cleaned_img = LoadUserAvatar(username)
-
-    context = {'user_avatar': cleaned_img}
+    cleaned_cover = LoadUserCover(username)
+    context = {
+        'user_avatar': cleaned_img,
+        'user_cover': cleaned_cover,
+        }
     return render(request, 'profiles/profiles.html', context=context)
 
 

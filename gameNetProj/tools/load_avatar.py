@@ -32,3 +32,26 @@ def LoadUserAvatar(username):
         cleaned_img = base64.b64encode(buf.getvalue()).decode('utf-8')
 
     return cleaned_img
+
+def LoadUserCover(username):
+    #connect to minio
+    s3 = boto3.resource('s3',
+                            endpoint_url='http://s3:9000',
+                            aws_access_key_id=AWS_ACCESS_KEY_ID,
+                            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+                            config=Config(signature_version='s3v4'),
+                            region_name='eu-west-1')
+    
+    user = User.objects.get(login=username)
+    cover_name = user.cover.name
+
+    if cover_name == '':
+        cleaned_img = ''
+        return cleaned_img
+    
+    else:
+        buf = BytesIO()
+        s3.Bucket('media-bucket').download_fileobj(cover_name, buf)
+        cleaned_img = base64.b64encode(buf.getvalue()).decode('utf-8')
+
+    return cleaned_img

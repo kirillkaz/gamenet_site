@@ -192,7 +192,8 @@ a{
     border-radius: 30px;
 }
 
-.profile img{
+.profile .avatar{
+    position: absolute;
     margin-top:140px;
     margin-left: 43px;
     box-sizing: content-box;
@@ -200,6 +201,12 @@ a{
     width: 139px;
     border: 15px solid white;
     border-radius: 50%;
+}
+
+.profile .cover{
+    height: 226px;
+    width: 856px;
+    border-radius: 30px;
 }
 
 .galary{
