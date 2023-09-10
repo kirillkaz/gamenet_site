@@ -26,3 +26,14 @@ class UserImagesForm(forms.ModelForm):
     class Meta:
         model = UserImages
         fields = ['image']
+
+
+class ProfileSettingsForm(forms.Form):
+    name = forms.CharField(widget=forms.TextInput(attrs={'class':'field','placeholder':'Имя'}), required=False)
+    surname = forms.CharField(widget=forms.TextInput(attrs={'class':'field','placeholder':'Фамилия'}), required=False)
+    status = forms.CharField(widget=forms.Textarea(attrs={'class':'field','placeholder':'Статус'}), required=False)
+    sex = forms.CharField(widget=forms.TextInput(attrs={'class':'field','placeholder':'Мужчина'}), required=False)
+    phone = forms.CharField(widget=forms.TextInput(attrs={'class':'field','placeholder':'Номер телефона'}), required=False)
+    birthday = forms.DateField(widget=forms.DateInput(attrs={'class':'field','placeholder':'День рождения'}), required=False)
+    avatar = forms.ImageField(widget=forms.FileInput(attrs={'accept': 'image/', 'onchange': 'download(this)'}), required=False)
+    cover = forms.ImageField(widget=forms.FileInput(attrs={'accept': 'image/', 'onchange': 'download(this)'}), required=False)
