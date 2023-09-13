@@ -256,3 +256,46 @@ a{
     left: 77%;
     top:7%;
 }
+
+.posts{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 70px;
+}
+
+.create-post-form{
+    display: flex;
+    flex-direction: row;
+    border: 2px solid #D6D6D6;
+    border-radius: 15px;
+    width: 80%;
+}
+
+.post-input{
+    border: none;
+    padding: 18px;
+    resize: none;
+    width: 730px;
+    border-radius: 15px;
+}
+
+.post-input:active, .post-input:hover, .post-input:focus{
+    outline: 0;
+    outline-offset: 0;
+}
+
+.send-post-arrow{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+}
+
+.send-post-arrow-img{
+    margin-bottom: 5px;
+    margin-right: 5px;
+    width: 23px;
+    height: 25px;
+}

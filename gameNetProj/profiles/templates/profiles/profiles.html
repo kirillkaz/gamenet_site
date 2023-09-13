@@ -71,7 +71,26 @@
                 <img class="avatar" src="data:image/png;base64,{{user_avatar}}">
             </div>
             <div class="galary"></div>
-            <div class="posts"></div>
+            <div class="posts">
+                <form method="post" class="create-post-form" id="create-post-form">
+                    {% csrf_token %}
+                    <textarea id="textfield_id" name="textfield" class="post-input" placeholder="Напишите пост..."></textarea>
+                    <div class="send-post-arrow"><img class="send-post-arrow-img" src="../../media/send.png" onclick="CreatePost('{{request.user.login}}', '{{request.user.password}}')"></div>
+                </form>
+
+                {% for post in user_posts%}
+                <div class="post-header">
+                    <div class="post-user-avatar">
+                        <img src="data:image/png;base64, {{user_avatar}}">
+                    </div>
+                    <div class="post-info-text">
+                        <div class="postcreation-creator">{{post.creator_id}}</div>
+                        <div class="postcreation-date">{{post.date}}</div>
+                    </div>
+                    <div class="post-content">{{post.text}}</div>
+                </div>
+                {%endfor%}
+            </div>
         </div>
         <div class="games_block">
             <div class="games-platforms"></div>
@@ -79,5 +98,7 @@
         </div>
     </div>
     <script src="{%static 'scripts/profiles_ajax_script.js'%}"></script>
+    <script src="{%static 'scripts/user_posts_ajax.js'%}"></script>
+    <script src="{%static 'scripts/textarea_resizer.js'%}"></script>
 </body>
 </html>

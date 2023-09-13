@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 class Post(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     date = models.DateTimeField(default=datetime.now)
     text = models.CharField(default=None)
     published = models.BooleanField(default=False)

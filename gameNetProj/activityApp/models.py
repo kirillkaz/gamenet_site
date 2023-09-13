@@ -8,15 +8,11 @@ from profiles.models import User
 this models was created for user's and group's posts
 '''
 class UserPosts(Post):
-    TYPE_OF_CREATOR = 'profiles.User'
-
-    creator_id = models.ForeignKey(f'{TYPE_OF_CREATOR}', on_delete=models.CASCADE)
+    creator_id = models.ForeignKey('profiles.User', on_delete=models.CASCADE)
 
 
 class GroupPosts(Post):
-    TYPE_OF_CREATOR = 'groups.Group'
-
-    creator_id = models.ForeignKey(f'{TYPE_OF_CREATOR}', on_delete=models.CASCADE)
+    creator_id = models.ForeignKey('groups.Group', on_delete=models.CASCADE)
 
 
 '''

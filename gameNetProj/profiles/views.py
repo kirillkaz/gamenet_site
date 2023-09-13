@@ -10,6 +10,7 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from .serializers import UserImagesSerializer
 from .models import User, UserImages, Bio, User_Friends
 from .forms import CustomRegisterForm, CustomAuthForm, ProfileSettingsForm
+from activityApp.models import UserPosts
 
 from tools.load_avatar import LoadUserAvatar, LoadUserCover
 from tools.links import SETTINGS_LINK
@@ -70,9 +71,12 @@ def register_auth(request):
 def profiles_page(request, username):
     cleaned_img = LoadUserAvatar(username)
     cleaned_cover = LoadUserCover(username)
+
+    user_posts = UserPosts.objects.filter(creator_id=username)
     context = {
         'user_avatar': cleaned_img,
         'user_cover': cleaned_cover,
+        'user_posts': user_posts,
         }
     return render(request, 'profiles/profiles.html', context=context)
 

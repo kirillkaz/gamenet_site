@@ -1,9 +1,11 @@
 from django.shortcuts import render
+from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .models import GroupPosts, UserPosts
+from .forms import PostForm
 from groups.models import Group
 from profiles.models import User, User_Friends
 
@@ -46,4 +48,31 @@ def news_page_view(request):
 
     context = {'groups_link': GROUP_LINK, 'user_avatar': user_avatar}
     return render(request, 'news_page.html', context)
+
+
+def post_form_ajax(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+    if is_ajax:
+        if request.method == 'GET':
+            form = PostForm()
+            context = {
+                'form': form,
+            }
+            return render(request, 'activityApp/ajax/postform_ajax.html', context)
+        
+        elif request.method == 'POST':
+            form = PostForm(request.POST)
+
+            if form.is_valid():
+                user_post = UserPosts.objects.create(creator_id=request.user, text=form.cleaned_data.get('textfield'))
+                return HttpResponse('<h1>Успех!</h1>')
+            
+            else:
+                return JsonResponse({'form_error': form.errors}, status=400)
+        else:
+            return JsonResponse({'req_error': 'invalid request'}, status=400)
+        
+    else:
+        return HttpResponseBadRequest('Invalid request')
 
