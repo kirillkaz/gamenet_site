@@ -1,3 +1,15 @@
+const ShowPosts = (username) => {
+    console.log('pam paaamm..')
+    $.ajax({
+        type: "get",
+        url: `http://0.0.0.0/profiles/ajax/posts/${username}`,
+        success: (data) => {
+            $('#posts_block').empty();
+            $('#posts_block').append(data);
+        }
+    });
+}
+
 const CreatePost = (u_login, u_password) => {
     let form_data = new FormData($('#create-post-form').get(0))
     let textarea_value = document.getElementsByClassName('post-input')[0].value
@@ -18,8 +30,10 @@ const CreatePost = (u_login, u_password) => {
             password: u_password,
             data: form_data,
             success: (data) => {
-                console.log('Успех!')
             }
         });
+        ShowPosts(u_login)
     }
 }
+let username = new URL(document.location).pathname.split('/')[2]
+ShowPosts(username)

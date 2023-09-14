@@ -72,11 +72,10 @@ def profiles_page(request, username):
     cleaned_img = LoadUserAvatar(username)
     cleaned_cover = LoadUserCover(username)
 
-    user_posts = UserPosts.objects.filter(creator_id=username)
     context = {
         'user_avatar': cleaned_img,
         'user_cover': cleaned_cover,
-        'user_posts': user_posts,
+        'profile_owner': username,
         }
     return render(request, 'profiles/profiles.html', context=context)
 
@@ -95,7 +94,27 @@ def profile_menu_ajax(request):
         
     else:
         return HttpResponseBadRequest('Invalid request')
-    
+
+
+def user_posts_ajax(request, username):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+    if is_ajax:
+        if request.method == 'GET':
+            user_avatar = LoadUserAvatar(username)
+            user_posts = UserPosts.objects.filter(creator_id=username)
+            
+            context = {
+                'user_posts': user_posts,
+                'user_avatar': user_avatar,
+            }
+            return render(request, 'ajax/posts_ajax.html', context)
+        else:
+            return JsonResponse({'req_error': 'invalid request'}, status=400)
+        
+    else:
+        return HttpResponseBadRequest('Invalid request')
+
 
 def settigns_page(request):
     username = request.user.login

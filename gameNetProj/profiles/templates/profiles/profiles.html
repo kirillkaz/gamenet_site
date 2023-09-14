@@ -72,25 +72,15 @@
             </div>
             <div class="galary"></div>
             <div class="posts">
+                {% if request.user.login == profile_owner %}
                 <form method="post" class="create-post-form" id="create-post-form">
                     {% csrf_token %}
                     <textarea id="textfield_id" name="textfield" class="post-input" placeholder="Напишите пост..."></textarea>
                     <div class="send-post-arrow"><img class="send-post-arrow-img" src="../../media/send.png" onclick="CreatePost('{{request.user.login}}', '{{request.user.password}}')"></div>
                 </form>
                 <div id="empty-post-error" class="error"></div>
-
-                {% for post in user_posts%}
-                <div class="post-header">
-                    <div class="post-user-avatar">
-                        <img src="data:image/png;base64, {{user_avatar}}">
-                    </div>
-                    <div class="post-info-text">
-                        <div class="postcreation-creator">{{post.creator_id}}</div>
-                        <div class="postcreation-date">{{post.date}}</div>
-                    </div>
-                    <div class="post-content">{{post.text}}</div>
-                </div>
-                {%endfor%}
+                {%endif%}
+                <div id="posts_block"></div>
             </div>
         </div>
         <div class="games_block">
