@@ -35,5 +35,7 @@ const CreatePost = (u_login, u_password) => {
         ShowPosts(u_login)
     }
 }
+
+//show posts onload
 let username = new URL(document.location).pathname.split('/')[2]
 ShowPosts(username)
