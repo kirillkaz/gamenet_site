@@ -301,3 +301,15 @@ a{
     width: 23px;
     height: 25px;
 }
+
+.error{
+    width: 730px;
+    display: flex;
+    flex-direction: row;
+}
+
+.error-text{
+    color: red;
+    font-size: 12px;
+    align-self: flex-start;
+}
