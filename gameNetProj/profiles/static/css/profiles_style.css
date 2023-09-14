@@ -271,14 +271,16 @@ a{
     border: 2px solid #D6D6D6;
     border-radius: 15px;
     width: 80%;
+    width: 730px;
 }
 
 .post-input{
     border: none;
     padding: 18px;
     resize: none;
-    width: 730px;
+    width: 700px;
     border-radius: 15px;
+    height: 53px;
 }
 
 .post-input:active, .post-input:hover, .post-input:focus{
@@ -294,8 +296,8 @@ a{
 }
 
 .send-post-arrow-img{
-    margin-bottom: 5px;
-    margin-right: 5px;
+    margin-bottom: 13px;
+    margin-right: 10px;
     width: 23px;
     height: 25px;
 }
