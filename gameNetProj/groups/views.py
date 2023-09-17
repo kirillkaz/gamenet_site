@@ -17,6 +17,7 @@ from rest_framework.response import Response
 from .serializers import GroupSerializer
 
 from tools.load_avatar import LoadUserAvatar
+from tools.ajax_wrapper import get_ajax_wrapper
 
 class GroupsAPIView(APIView):
     def get(self, request, user_login):
@@ -24,18 +25,19 @@ class GroupsAPIView(APIView):
         return Response({'groups': GroupSerializer(user_groups, many=True).data})
     
 
-'''
-this function get groups by usertype and client type in group
-in usertype:
-subscriber - get groups where user is subscriber
-admin - get groups where user is administrator
-
-in client type:
-client - user
-ajax - ajax
-'''
 def get_groups_context(request, p_type:str, client_type:str):
+    '''
+    This function get groups by usertype and client type in group
+    in usertype:
+    subscriber - get groups where user is subscriber
+    admin - get groups where user is administrator
 
+    in client type:
+
+    client - user
+
+    ajax - ajax
+    '''
     #get current user login
     login = request.user.login
 
@@ -124,28 +126,15 @@ def create_group(request):
     
 
 def get_subscribed_groups(request):
-    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    context = get_groups_context(request, 'subscriber', 'ajax')
 
-    if is_ajax:
-        if request.method == 'GET':
-            context = get_groups_context(request, 'subscriber', 'ajax')
-            return JsonResponse({'context': context})
-        return JsonResponse({'status': 'Invalid request'}, status=400)
-        
-    else:
-        return HttpResponseBadRequest('Invalid request')
+    return get_ajax_wrapper(request=request, context=context, return_type='json')
 
 
 def get_administrate_groups(request):
-    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    context = get_groups_context(request, 'admin', 'ajax')
 
-    if is_ajax:
-        if request.method == 'GET':
-            context = get_groups_context(request, 'admin', 'ajax')
-            return JsonResponse({'context': context})
-        return JsonResponse({'status': 'Invalid request'}, status=400)
-    else:
-        return HttpResponseBadRequest('Invalid request')
+    return get_ajax_wrapper(request=request, context=context, return_type='json')
     
 
 @csrf_exempt
