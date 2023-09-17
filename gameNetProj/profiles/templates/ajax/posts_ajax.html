@@ -1,11 +1,13 @@
 {% for post in user_posts%}
-<div class="post-header">
-    <div class="post-user-avatar">
-        <img src="data:image/png;base64, {{user_avatar}}">
-    </div>
-    <div class="post-info-text">
-        <div class="postcreation-creator">{{post.creator_id}}</div>
-        <div class="postcreation-date">{{post.date}}</div>
+<div class="post">
+    <div class="post-header">
+        <div class="post-user-avatar">
+            <img src="data:image/png;base64, {{user_avatar}}">
+        </div>
+        <div class="post-info-text">
+            <div class="postcreation-creator">{{post.creator_id}}</div>
+            <div class="postcreation-date">{{post.date}}</div>
+        </div>
     </div>
     <div class="post-content">{{post.text}}</div>
 </div>

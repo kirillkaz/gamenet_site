@@ -120,14 +120,13 @@ header{
     text-align: center;
     justify-content: center;
     margin-top: 58px;
-    height: 100%;
     width: 75vw;
     margin-left: auto;
     margin-right: auto;
 }
 
 .nav_block{
-    height: 70%;
+    height: 764px;
     width: 192px;
     background-color: rgba(248, 248, 248, 1);
 
@@ -313,3 +312,44 @@ a{
     font-size: 12px;
     align-self: flex-start;
 }
+
+/* style for posts */
+.post{
+    text-align: left;
+    margin: 100px;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid #E3E3E3;
+    border-radius: 15px;
+    width: 730px;
+}
+
+.post-user-avatar img{
+    height: 53px;
+    width:53px;
+    border-radius: 50%;
+}
+
+.post-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 35px;
+}
+
+.post-info-text{
+    margin-left: 23px;
+}
+
+.postcreation-date{
+    color: #9B9B9B;
+    font-size: 12px;
+}
+
+.post-content{
+    border: 2px solid #E3E3E3;
+    border-radius: 15px;
+    margin: 0 35px 35px 35px;
+    padding: 18px;
+}
+/* end style for posts */
