@@ -12,6 +12,7 @@ class Post(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ['-date',]
 
 
 class Comment(models.Model):
@@ -22,6 +23,7 @@ class Comment(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ['-date',]
 
 '''
 TODO определиться с тем, что делать с комментами удаленных пользователей
