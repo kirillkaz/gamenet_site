@@ -80,6 +80,7 @@ def profile_menu_ajax(request):
                 'settings_link': SETTINGS_LINK,
             }
     url = 'ajax/profiles_ajax.html'
+    
     return get_ajax_wrapper(request=request, url=url, context=context)
 
 
