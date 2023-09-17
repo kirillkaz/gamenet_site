@@ -14,12 +14,7 @@ from activityApp.models import UserPosts
 
 from tools.load_avatar import LoadUserAvatar, LoadUserCover
 from tools.links import SETTINGS_LINK
-
-import boto3
-from botocore.client import Config
-from config.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
-from io import BytesIO
-import base64
+from tools.ajax_wrapper import get_ajax_wrapper
 
 
 @csrf_exempt
@@ -81,39 +76,25 @@ def profiles_page(request, username):
 
 
 def profile_menu_ajax(request):
-    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-
-    if is_ajax:
-        if request.method == 'GET':
-            context = {
+    context = {
                 'settings_link': SETTINGS_LINK,
             }
-            return render(request, 'ajax/profiles_ajax.html', context)
-        else:
-            return JsonResponse({'req_error': 'invalid request'}, status=400)
-        
-    else:
-        return HttpResponseBadRequest('Invalid request')
+    url = 'ajax/profiles_ajax.html'
+    return get_ajax_wrapper(request=request, url=url, context=context)
 
 
 def user_posts_ajax(request, username):
-    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    user_avatar = LoadUserAvatar(username)
+    user_posts = UserPosts.objects.filter(creator_id=username)
+    
+    context = {
+        'user_posts': user_posts,
+        'user_avatar': user_avatar,
+    }
 
-    if is_ajax:
-        if request.method == 'GET':
-            user_avatar = LoadUserAvatar(username)
-            user_posts = UserPosts.objects.filter(creator_id=username)
-            
-            context = {
-                'user_posts': user_posts,
-                'user_avatar': user_avatar,
-            }
-            return render(request, 'ajax/posts_ajax.html', context)
-        else:
-            return JsonResponse({'req_error': 'invalid request'}, status=400)
-        
-    else:
-        return HttpResponseBadRequest('Invalid request')
+    url = 'ajax/posts_ajax.html'    
+
+    return get_ajax_wrapper(request=request, url=url, context=context)
 
 
 def settigns_page(request):
@@ -194,3 +175,4 @@ def profile_settings_ajax(request):
         
     else:
         return HttpResponseBadRequest('Invalid request')
+
