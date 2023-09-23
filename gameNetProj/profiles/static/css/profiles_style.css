@@ -269,7 +269,6 @@ a{
     flex-direction: row;
     border: 2px solid #D6D6D6;
     border-radius: 15px;
-    width: 80%;
     width: 730px;
 }
 
@@ -294,7 +293,7 @@ a{
     height: 100%;
 }
 
-.send-post-arrow-img{
+.send-post-arrow-img, .send-comment-arrow-img{
     margin-bottom: 13px;
     margin-right: 10px;
     width: 23px;
@@ -324,7 +323,7 @@ a{
     width: 730px;
 }
 
-.post-user-avatar img{
+.post-user-avatar img, .comment-block img{
     height: 53px;
     width:53px;
     border-radius: 50%;
@@ -353,3 +352,61 @@ a{
     padding: 18px;
 }
 /* end style for posts */
+
+.user-posts-comments-block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.comment-block{
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    width: 90%;
+    margin-top: 17px;
+}
+
+.comment-text{
+    border: 2px solid #E3E3E3;
+    border-radius: 15px;
+    margin: 0 0px 35px 22px;
+    padding: 18px;
+    width: 100%;
+}
+
+.create-comment-form{
+    display: flex;
+    flex-direction: row;
+    border: 2px solid #D6D6D6;
+    border-radius: 15px;
+    width: 90%;
+    margin: 17px auto 17px auto;
+}
+
+.comment-input{
+    border: none;
+    padding: 18px;
+    resize: none;
+    border-radius: 15px;
+    height: 53px;
+    width: 95%;
+}
+
+.comment-input:active, .comment-input:hover, .comment-input:focus{
+    outline: 0;
+    outline-offset: 0;
+}
+
+.send-comment-arrow{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+hr{
+    width: 90%;
+    margin: auto;
+    border-color: #e3e3e37c;
+}
