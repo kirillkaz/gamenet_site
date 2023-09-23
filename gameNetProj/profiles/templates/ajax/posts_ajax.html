@@ -17,7 +17,7 @@
     <div class="create-comment">
         <form method="post" class="create-comment-form" id="create-comment-form-{{post.id}}">
             {% csrf_token %}
-            <textarea id="textfield_id" name="textfield" class="comment-input" placeholder="Напишите комментарий..."></textarea>
+            <textarea id="textfield_id-{{post.id}}" name="textfield" class="comment-input" placeholder="Напишите комментарий..."></textarea>
             <div class="send-comment-arrow"><img class="send-comment-arrow-img" src="../../media/send.png" onclick="CreateComment('{{request.user.login}}', '{{request.user.password}}', {{post.id}})"></div>
         </form>
     </div>

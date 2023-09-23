@@ -11,7 +11,7 @@ const ShowComments = (post_id) =>{
 
 const CreateComment = (u_login, u_password, post_id) => {
     let form_data = new FormData($(`#create-comment-form-${post_id}`).get(0))
-    let textarea_value = document.getElementsByClassName('post-input')[0].value
+    let textarea_value = document.getElementById(`textfield_id-${post_id}`).value
 
     if (textarea_value == ''){
         $('#empty-comment-error').empty();
