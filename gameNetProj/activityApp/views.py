@@ -4,8 +4,8 @@ from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .models import GroupPosts, UserPosts
-from .forms import PostForm
+from .models import GroupPosts, UserPosts, UserPostComment
+from .forms import PostForm, CommentForm
 from groups.models import Group
 from profiles.models import User, User_Friends
 
@@ -66,6 +66,35 @@ def post_form_ajax(request):
 
             if form.is_valid():
                 user_post = UserPosts.objects.create(creator_id=request.user, text=form.cleaned_data.get('textfield'))
+                return HttpResponse('<h1>Успех!</h1>')
+            
+            else:
+                return JsonResponse({'form_error': form.errors}, status=400)
+        else:
+            return JsonResponse({'req_error': 'invalid request'}, status=400)
+        
+    else:
+        return HttpResponseBadRequest('Invalid request')
+    
+
+def comment_form_ajax(request, post_id):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    current_post = UserPosts.objects.get(id=post_id)
+    user = request.user
+
+    if is_ajax:
+        if request.method == 'GET':
+            form = CommentForm()
+            context = {
+                'form': form,
+            }
+            return render(request, 'activityApp/ajax/postform_ajax.html', context)
+        
+        elif request.method == 'POST':
+            form = CommentForm(request.POST)
+
+            if form.is_valid():
+                user_post = UserPostComment.objects.create(user_id=request.user, post_id=current_post, text=form.cleaned_data.get('textfield'))
                 return HttpResponse('<h1>Успех!</h1>')
             
             else:

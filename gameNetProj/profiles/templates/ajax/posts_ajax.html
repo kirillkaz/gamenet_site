@@ -1,5 +1,5 @@
 {% for post in user_posts%}
-<div class="post">
+<div id="post-{{post.id}}" class="post">
     <div class="post-header">
         <div class="post-user-avatar">
             <img src="data:image/png;base64, {{user_avatar}}">
@@ -10,5 +10,16 @@
         </div>
     </div>
     <div class="post-content">{{post.text}}</div>
+    <hr>
+    <script>ShowComments({{post.id}})</script>
+    <div id="comments-block-{{post.id}}" class="user-posts-comments-block"></div>
+
+    <div class="create-comment">
+        <form method="post" class="create-comment-form" id="create-comment-form-{{post.id}}">
+            {% csrf_token %}
+            <textarea id="textfield_id" name="textfield" class="comment-input" placeholder="Напишите комментарий..."></textarea>
+            <div class="send-comment-arrow"><img class="send-comment-arrow-img" src="../../media/send.png" onclick="CreateComment('{{request.user.login}}', '{{request.user.password}}', {{post.id}})"></div>
+        </form>
+    </div>
 </div>
 {%endfor%}

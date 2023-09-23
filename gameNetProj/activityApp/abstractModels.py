@@ -16,7 +16,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey('profiles.User', on_delete=models.CASCADE)
     text = models.CharField(default=None)
     date = models.DateTimeField(default=datetime.now)
@@ -31,3 +31,10 @@ TODO определиться с тем, что делать с коммента
 возможного присвоения им айди старого пользователя - коммент не становился
 комментом нового пользователя
 '''
+
+class Like(models.Model):
+    id = models.AutoField(primary_key=True)
+    user_id = models.ForeignKey('profiles.User', on_delete=models.CASCADE)
+
+    class Meta:
+        abstract = True

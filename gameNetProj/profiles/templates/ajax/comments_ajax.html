@@ -1,0 +1,6 @@
+{% for comment in comments %}
+<div class="comment-block">
+    <img src="data:image/png;base64, {{comment.avatar}}">
+    <div class="comment-text">{{comment.text}}</div>
+</div>
+{% endfor %}

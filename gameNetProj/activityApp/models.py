@@ -1,5 +1,5 @@
 from django.db import models
-from .abstractModels import Post, Comment
+from .abstractModels import Post, Comment, Like
 from datetime import datetime
 from profiles.models import User
 
@@ -64,3 +64,11 @@ TODO определиться с тем, что делать с сообщени
 возможного присвоения им айди старого пользователя - сообщение не становилось
 сообщением нового пользователя
 '''
+
+
+class UserPostLike(Like):
+    post_id = models.ForeignKey('UserPosts', on_delete=models.CASCADE)
+
+
+class GroupPostLike(Like):
+    post_id = models.ForeignKey('GroupPosts', on_delete=models.CASCADE)

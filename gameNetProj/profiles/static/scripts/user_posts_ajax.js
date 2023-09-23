@@ -1,5 +1,41 @@
+const ShowComments = (post_id) =>{
+    $.ajax({
+        type: "get",
+        url: `http://0.0.0.0/profiles/ajax/comments/${post_id}`,
+        success: (data) => {
+            $(`#comments-block-${post_id}`).empty();
+            $(`#comments-block-${post_id}`).append(data);
+        }
+    });
+}
+
+const CreateComment = (u_login, u_password, post_id) => {
+    let form_data = new FormData($(`#create-comment-form-${post_id}`).get(0))
+    let textarea_value = document.getElementsByClassName('post-input')[0].value
+
+    if (textarea_value == ''){
+        $('#empty-comment-error').empty();
+        $('#empty-comment-error').append('<div class="error-text">К сожалению вы не можете отправить пустой комментарий.</div>');
+    }
+
+    else{
+        $.ajax({
+            type: "post",
+            url: `http://0.0.0.0/activities/users/comments/${post_id}`,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            username: u_login,
+            password: u_password,
+            data: form_data,
+            success: (data) => {
+            }
+        });
+        ShowComments(post_id)
+    }
+}
+
 const ShowPosts = (username) => {
-    console.log('pam paaamm..')
     $.ajax({
         type: "get",
         url: `http://0.0.0.0/profiles/ajax/posts/${username}`,

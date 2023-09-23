@@ -10,7 +10,7 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from .serializers import UserImagesSerializer
 from .models import User, UserImages, Bio, User_Friends
 from .forms import CustomRegisterForm, CustomAuthForm, ProfileSettingsForm
-from activityApp.models import UserPosts
+from activityApp.models import UserPosts, UserPostComment
 
 from tools.load_avatar import LoadUserAvatar, LoadUserCover
 from tools.links import SETTINGS_LINK
@@ -87,7 +87,7 @@ def profile_menu_ajax(request):
 def user_posts_ajax(request, username):
     user_avatar = LoadUserAvatar(username)
     user_posts = UserPosts.objects.filter(creator_id=username)
-    
+
     context = {
         'user_posts': user_posts,
         'user_avatar': user_avatar,
@@ -96,6 +96,30 @@ def user_posts_ajax(request, username):
     url = 'ajax/posts_ajax.html'    
 
     return get_ajax_wrapper(request=request, url=url, context=context)
+
+
+def user_show_comments_ajax(request, post_id):
+    class PostContent:
+        def __init__(self, text, avatar):
+            self.text = text
+            self.avatar = avatar
+
+    raw_comments = UserPostComment.objects.filter(post_id=post_id)
+    
+    comments = []
+    for comment in raw_comments:
+        avatar = LoadUserAvatar(comment.user_id)
+        post = PostContent(comment.text, avatar)
+        comments.append(post)
+    
+    context = {
+        'comments': comments,
+    }
+
+    url = 'ajax/comments_ajax.html'
+
+    return get_ajax_wrapper(request, url, context)
+    
 
 
 def settigns_page(request):
