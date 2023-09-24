@@ -64,11 +64,13 @@ def register_auth(request):
 
 
 def profiles_page(request, username):
-    cleaned_img = LoadUserAvatar(username)
+    profile_owner_avatar = LoadUserAvatar(username)
+    user_avatar = LoadUserAvatar(request.user.login)
     cleaned_cover = LoadUserCover(username)
 
     context = {
-        'user_avatar': cleaned_img,
+        'profile_owner_avatar': profile_owner_avatar,
+        'user_avatar': user_avatar,
         'user_cover': cleaned_cover,
         'profile_owner': username,
         }
