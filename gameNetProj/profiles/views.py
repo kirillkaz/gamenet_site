@@ -13,7 +13,7 @@ from .forms import CustomRegisterForm, CustomAuthForm, ProfileSettingsForm
 from activityApp.models import UserPosts, UserPostComment
 
 from tools.load_avatar import LoadUserAvatar, LoadUserCover
-from tools.links import SETTINGS_LINK
+from tools.links import SETTINGS_LINK, PROFILE_LINK
 from tools.ajax_wrapper import get_ajax_wrapper
 
 
@@ -78,7 +78,16 @@ def profiles_page(request, username):
 
 
 def profile_menu_ajax(request):
+    try:
+        profile_link = PROFILE_LINK + request.user.login
+    except:
+        profile_link = ''
+        error = 'Внимание, вы не авторизованый пользователь!'
+
+    #TODO сделать всплывающее окно для ошибки!
+
     context = {
+                'profile_link': profile_link,
                 'settings_link': SETTINGS_LINK,
             }
     url = 'ajax/profiles_ajax.html'

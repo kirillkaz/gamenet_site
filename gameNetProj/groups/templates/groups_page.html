@@ -37,11 +37,12 @@
                 <div id="menu_block"></div>
             </div>
 
-            <div class="User_avatar_arrow">
+            <div class="User_avatar_arrow" onclick="showProfileMenu()">
                 <img src="../../media/arrow-down-sign-to-navigate.png">
             </div>
         </div>
     </header>
+    <div id="menu_block_content"></div>
 
     <div id="group_creation"></div>
 
@@ -96,5 +97,6 @@
 <script src="{%static 'groups/scripts/group_ajax.js'%}"></script>
 <script src="{%static 'groups/scripts/create_group.js'%}"></script>
 <script src="{%static 'groups/scripts/group_finder.js'%}"></script>
+<script src="{%static 'scripts/profiles_ajax_script.js'%}"></script>
 </body>
 </html>

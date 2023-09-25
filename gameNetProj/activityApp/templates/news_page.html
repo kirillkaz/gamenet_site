@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -35,11 +36,12 @@
                 <img src="data:image/png;base64,{{user_avatar}}">
             </div>
 
-            <div class="User_avatar_arrow">
+            <div class="User_avatar_arrow" onclick="showProfileMenu()">
                 <img src="../../media/arrow-down-sign-to-navigate.png">
             </div>
         </div>
     </header>
+    <div id="menu_block_content"></div>
 
     <div class="main_news_block">
         <div class="nav_block">
@@ -62,5 +64,6 @@
         <div class="news_block"> К сожалению - для вас пока что нет новостей:С</div>
         <div class="games_block">asdasd</div>
     </div>
+    <script src="{%static 'scripts/profiles_ajax_script.js'%}"></script>
 </body>
 </html>
