@@ -38,11 +38,12 @@
                 <img src="data:image/png;base64,{{user_avatar}}">
             </div>
 
-            <div class="User_avatar_arrow">
+            <div class="User_avatar_arrow" onclick="showProfileMenu()">
                 <img src="../../media/arrow-down-sign-to-navigate.png">
             </div>
         </div>
     </header>
+    <div id="menu_block_content"></div>
 
     <div class="main_profiles_block">
         <div class="nav_block">
@@ -85,6 +86,7 @@
             </div>
         </div>
     </div>
+    <script src="{%static 'scripts/profiles_ajax_script.js'%}"></script>
     <script src="{%static 'scripts/settings_ajax.js'%}"></script>
     <script src="{%static 'scripts/img_script.js'%}"></script>
 </body>

@@ -67,12 +67,15 @@ def profiles_page(request, username):
     profile_owner_avatar = LoadUserAvatar(username)
     user_avatar = LoadUserAvatar(request.user.login)
     cleaned_cover = LoadUserCover(username)
-
+    try:
+        user = User.objects.get(login=username)
+    except:
+        pass
     context = {
         'profile_owner_avatar': profile_owner_avatar,
         'user_avatar': user_avatar,
         'user_cover': cleaned_cover,
-        'profile_owner': username,
+        'profile_owner': user,
         }
     return render(request, 'profiles/profiles.html', context=context)
 

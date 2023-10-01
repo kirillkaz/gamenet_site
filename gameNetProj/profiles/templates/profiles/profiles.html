@@ -68,11 +68,22 @@
                 {% if user_cover != ''%}
                 <img class="cover" src="data:image/png;base64,{{user_cover}}">
                 {% endif %}
+                <div class="profile_footer">
+                    <div class="profile-footer-content">
+                        <div class="user-name">
+                            {% if profile_owner.name != "" %}
+                                {{profile_owner.name}} {{profile_owner.surname}}
+                            {% else %}
+                                {{profile_owner.login}}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
                 <img class="avatar" src="data:image/png;base64,{{profile_owner_avatar}}">
             </div>
             <div class="galary"></div>
             <div class="posts">
-                {% if request.user.login == profile_owner %}
+                {% if request.user.login == profile_owner.login %}
                 <form method="post" class="create-post-form" id="create-post-form">
                     {% csrf_token %}
                     <textarea id="textfield_id" name="textfield" class="post-input" placeholder="Напишите пост..."></textarea>

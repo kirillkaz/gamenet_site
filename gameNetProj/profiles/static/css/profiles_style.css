@@ -410,3 +410,30 @@ hr{
     margin: auto;
     border-color: #e3e3e37c;
 }
+
+.profile_footer{
+    position: absolute;
+    height: 86px;
+    top: 258px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    width: 856px;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-right: 2px solid #E3E3E3;
+    border-left: 2px solid #E3E3E3;
+    border-bottom: 2px solid #E3E3E3;
+    backdrop-filter: blur(5px);
+}
+
+.profile-footer-content{
+    display: flex;
+    flex-direction: row;
+    margin-left: 250px;
+}
+
+.user-name{
+    margin-top: 15px;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+}

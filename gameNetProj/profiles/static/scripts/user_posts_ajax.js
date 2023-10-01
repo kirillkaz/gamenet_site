@@ -29,9 +29,10 @@ const CreateComment = (u_login, u_password, post_id) => {
             password: u_password,
             data: form_data,
             success: (data) => {
+                ShowComments(post_id)
             }
         });
-        ShowComments(post_id)
+        
     }
 }
 
