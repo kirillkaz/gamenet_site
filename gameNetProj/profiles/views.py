@@ -136,7 +136,7 @@ def user_show_comments_ajax(request, post_id):
     
 
 
-def settigns_page(request):
+def settings_page(request):
     username = request.user.login
     user_avatar = LoadUserAvatar(username)
 
@@ -152,10 +152,19 @@ def profile_settings_ajax(request):
 
     if is_ajax:
         if request.method == 'GET':
-            username = request.user.login
-            user_avatar = LoadUserAvatar(username)
+            user = request.user
+            user_avatar = LoadUserAvatar(user.login)
 
-            form = ProfileSettingsForm()
+            user_bio = Bio.objects.get(user_id=user.login)
+
+            form = ProfileSettingsForm(initial={
+                'name': user.name,
+                'surname': user.surname,
+                'status': user_bio.user_description,
+                'sex': user_bio.sex,
+                'phone': user.phone,
+                'birthday': user_bio.birthday,
+            })
 
             context = {
                 'user_avatar': user_avatar,

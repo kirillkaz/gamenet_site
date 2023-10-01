@@ -4,7 +4,7 @@ from .views import register_auth,\
       profiles_page,\
       profile_menu_ajax,\
       profile_settings_ajax,\
-      settigns_page,\
+      settings_page,\
       user_posts_ajax,\
       user_show_comments_ajax
 
@@ -15,6 +15,6 @@ urlpatterns = {
     path('profiles/ajax/settings/profile', profile_settings_ajax, name='settings_profile_ajax'),
     path('profiles/ajax/posts/<str:username>', user_posts_ajax, name='user_posts_ajax'),
     path('profiles/ajax/comments/<int:post_id>', user_show_comments_ajax, name='comments_ajax'),
-    path('profile/settings', settigns_page, name='settings'),
+    path('profile/settings', settings_page, name='settings'),
 }
 urlpatterns = format_suffix_patterns(urlpatterns)
