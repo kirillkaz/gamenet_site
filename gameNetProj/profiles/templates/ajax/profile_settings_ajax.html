@@ -31,7 +31,11 @@
 
     <label for="id_cover">
         <div class="input_field-cover">
+            {% if user_cover == "" %}
             Обложка профиля
+            {% else %}
+            <img class="loaded_cover" src="data:image/png;base64,{{user_cover}}">
+            {% endif %}
         </div>
     </label>
     <button type="button" class="save-button" onclick="SaveSettings('profile', '{{request.user.login}}', '{{request.user.password}}')">Сохранить</button>

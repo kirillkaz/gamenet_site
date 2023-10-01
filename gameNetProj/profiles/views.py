@@ -154,7 +154,7 @@ def profile_settings_ajax(request):
         if request.method == 'GET':
             user = request.user
             user_avatar = LoadUserAvatar(user.login)
-
+            user_cover = LoadUserCover(user.login)
             user_bio = Bio.objects.get(user_id=user.login)
 
             form = ProfileSettingsForm(initial={
@@ -168,6 +168,7 @@ def profile_settings_ajax(request):
 
             context = {
                 'user_avatar': user_avatar,
+                'user_cover': user_cover,
                 'form': form,
             }
             return render(request, 'ajax/profile_settings_ajax.html', context)
