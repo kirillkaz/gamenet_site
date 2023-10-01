@@ -175,3 +175,18 @@ a{
     color:#000000;
     text-decoration: none;
 }
+
+.profile-menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    background-color: white;
+    border: 2px solid #E3E3E3;
+    border-radius: 7px;
+    height: 100px;
+    width: 130px;
+    left: 77%;
+    top:7%;
+}
