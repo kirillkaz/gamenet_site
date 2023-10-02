@@ -1,6 +1,13 @@
 {% for comment in comments %}
 <div class="comment-block">
     <img src="data:image/png;base64, {{comment.avatar}}">
-    <div class="comment-text">{{comment.text}}</div>
+    <div class="comment-text-block">
+        {% if comment.user.name != ""%}
+        <div class="user-comment-name">{{comment.user.name}} {{comment.user.surname}}</div>
+        {% else %}
+        <div class="user-comment-name">{{comment.user.login}}</div>
+        {% endif %}
+        <div class="comment-text">{{comment.text}}</div>
+    </div>
 </div>
 {% endfor %}

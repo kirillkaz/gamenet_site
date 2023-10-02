@@ -369,11 +369,18 @@ a{
 }
 
 .comment-text{
-    border: 2px solid #E3E3E3;
-    border-radius: 15px;
     margin: 0 0px 35px 22px;
-    padding: 18px;
+    padding: 0px 18px 18px 18px;
     width: 100%;
+}
+
+.comment-text-block{
+    display: flex;
+    flex-direction: column;
+}
+
+.user-comment-name{
+    margin: 0px 0px 10px 40px;
 }
 
 .create-comment-form{

@@ -115,16 +115,18 @@ def user_posts_ajax(request, username):
 
 def user_show_comments_ajax(request, post_id):
     class PostContent:
-        def __init__(self, text, avatar):
+        def __init__(self, text, user, avatar):
             self.text = text
+            self.user = user
             self.avatar = avatar
 
     raw_comments = UserPostComment.objects.filter(post_id=post_id)
     
     comments = []
     for comment in raw_comments:
+        user = User.objects.get(login=comment.user_id)
         avatar = LoadUserAvatar(comment.user_id)
-        post = PostContent(comment.text, avatar)
+        post = PostContent(comment.text, user, avatar)
         comments.append(post)
     
     context = {
