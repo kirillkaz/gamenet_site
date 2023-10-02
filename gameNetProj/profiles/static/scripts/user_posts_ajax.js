@@ -29,10 +29,9 @@ const CreateComment = (u_login, u_password, post_id) => {
             password: u_password,
             data: form_data,
             success: (data) => {
-                ShowComments(post_id)
             }
         });
-        
+        setTimeout(ShowComments, 250, post_id)
     }
 }
 
@@ -69,7 +68,7 @@ const CreatePost = (u_login, u_password) => {
             success: (data) => {
             }
         });
-        ShowPosts(u_login)
+        setTimeout(ShowPosts, 250, u_login)
     }
 }
 
