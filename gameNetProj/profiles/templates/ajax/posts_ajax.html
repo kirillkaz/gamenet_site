@@ -5,7 +5,11 @@
             <img src="data:image/png;base64, {{user_avatar}}">
         </div>
         <div class="post-info-text">
-            <div class="postcreation-creator">{{post.creator_id}}</div>
+            {% if user.name != "" %}
+            <div class="postcreation-creator">{{posts_owner.name}} {{posts_owner.surname}}</div>
+            {% else %}
+            <div class="postcreation-creator">{{posts_owner.login}}</div>
+            {% endif %}
             <div class="postcreation-date">{{post.date}}</div>
         </div>
     </div>

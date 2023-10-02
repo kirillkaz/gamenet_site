@@ -101,10 +101,11 @@ def profile_menu_ajax(request):
 def user_posts_ajax(request, username):
     user_avatar = LoadUserAvatar(username)
     user_posts = UserPosts.objects.filter(creator_id=username)
-
+    user = User.objects.get(login=username)
     context = {
         'user_posts': user_posts,
         'user_avatar': user_avatar,
+        'posts_owner': user, 
     }
 
     url = 'ajax/posts_ajax.html'    
