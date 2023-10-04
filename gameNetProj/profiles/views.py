@@ -13,7 +13,7 @@ from .forms import CustomRegisterForm, CustomAuthForm, ProfileSettingsForm
 from activityApp.models import UserPosts, UserPostComment
 
 from tools.load_avatar import LoadUserAvatar, LoadUserCover
-from tools.links import SETTINGS_LINK, PROFILE_LINK
+from tools.links import SETTINGS_LINK, PROFILE_LINK, EXIT_LINK
 from tools.ajax_wrapper import get_ajax_wrapper
 
 
@@ -92,6 +92,7 @@ def profile_menu_ajax(request):
     context = {
                 'profile_link': profile_link,
                 'settings_link': SETTINGS_LINK,
+                'exit_link': EXIT_LINK,
             }
     url = 'ajax/profiles_ajax.html'
     

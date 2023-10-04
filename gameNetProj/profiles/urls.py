@@ -1,4 +1,6 @@
 from django.urls import path
+from django.contrib.auth import views as authViews
+
 from rest_framework.urlpatterns import format_suffix_patterns
 from .views import register_auth,\
       profiles_page,\
@@ -16,5 +18,6 @@ urlpatterns = {
     path('profiles/ajax/posts/<str:username>', user_posts_ajax, name='user_posts_ajax'),
     path('profiles/ajax/comments/<int:post_id>', user_show_comments_ajax, name='comments_ajax'),
     path('profile/settings', settings_page, name='settings'),
+    path('logout', authViews.LogoutView.as_view(), name='exit')
 }
 urlpatterns = format_suffix_patterns(urlpatterns)
